@@ -20,10 +20,17 @@ namespace Poketto.Infrastructure.Persistence.Interceptors
 
         public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
         {
+            UpdateAuditProperties(eventData.Context);
             return base.SavingChanges(eventData, result);
         }
 
-        public void UpdateAuditProperties(DbContext? context)
+        public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+        {
+            UpdateAuditProperties(eventData.Context);
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
+        }
+
+        private void UpdateAuditProperties(DbContext? context)
         {
             if (context != null)
             {
