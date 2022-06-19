@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Builder;
 using Poketto.Api;
+using Poketto.Application;
 using Poketto.Infrastructure;
 using Poketto.Infrastructure.Persistence;
 
@@ -6,7 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 //add application layer here
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddWebApi(builder.Configuration);
+builder.Services.AddGraphQLServices();
 
 var app = builder.Build();
 
@@ -40,5 +44,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseEndpoints(endpoints => endpoints.MapGraphQL());
 
 app.Run();

@@ -11,10 +11,10 @@ namespace Poketto.Domain.Entities
         public string OwnerUserId { get; set; } = string.Empty;
         public bool IsPlaceholder { get; set; }
 
-        public virtual IList<JournalEntry> JournalEntries { get; set; } =new List<JournalEntry>();
+        public IList<JournalEntry> JournalEntries { get; set; } =new List<JournalEntry>();
         public Guid? ParentAccountId { get; set; }
-        public virtual Account? ParentAccount { get; set; }
-        public virtual IList<Account>? ChildAccounts { get; set; }
+        public Account? ParentAccount { get; set; }
+        public IList<Account>? ChildAccounts { get; set; }
     }
 }
 

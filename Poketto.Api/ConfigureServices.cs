@@ -2,6 +2,7 @@
 using Microsoft.Identity.Web;
 using Poketto.Api.Services;
 using Poketto.Application.Common.Interfaces;
+using Poketto.Application.GraphQL;
 using Poketto.Infrastructure.Persistence;
 
 namespace Poketto.Api
@@ -26,6 +27,17 @@ namespace Poketto.Api
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
+            return services;
+        }
+
+        public static IServiceCollection AddGraphQLServices(this IServiceCollection services)
+        {
+            services.AddGraphQLServer()
+                .RegisterDbContext<ApplicationDbContext>()
+                .AddQueryType<Query>()
+                .AddProjections()
+                .AddFiltering()
+                .AddSorting();
             return services;
         }
     }

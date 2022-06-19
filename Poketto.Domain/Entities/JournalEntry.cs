@@ -8,8 +8,8 @@ namespace Poketto.Domain.Entities
         public double Amount { get; set; }
 
         public Guid TransactionJournalId { get; set; }
-        public virtual TransactionJournal TransactionJournal { get; set; } = new TransactionJournal();
+        public TransactionJournal TransactionJournal { get; set; } = new TransactionJournal();
         public Guid AccountId { get; set; }
-        public virtual Account Account { get; set; } = new Account();
+        public Account Account { get; set; } = new Account();
     }
 }
