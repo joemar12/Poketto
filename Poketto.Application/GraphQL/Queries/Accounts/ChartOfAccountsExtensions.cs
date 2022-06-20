@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Poketto.Application.Common.Interfaces;
-using Poketto.Application.Models;
 
-namespace Poketto.Application.GraphQL
+namespace Poketto.Application.GraphQL.Queries.Accounts
 {
-    public class Query
+    [ExtendObjectType(OperationTypeNames.Query)]
+    public class ChartOfAccountsExtensions
     {
         private readonly IMapper _mapper;
 
-        public Query(IMapper mapper)
+        public ChartOfAccountsExtensions(IMapper mapper)
         {
             _mapper = mapper;
         }
