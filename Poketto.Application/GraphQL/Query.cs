@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
 using Poketto.Application.Common.Interfaces;
-using Poketto.Application.Common.Mapping.Utils;
 using Poketto.Application.Models;
-using Poketto.Domain.Entities;
 
 namespace Poketto.Application.GraphQL
 {
@@ -18,12 +14,15 @@ namespace Poketto.Application.GraphQL
         }
 
         [UseFiltering]
-        public IQueryable<AccountDto> Accounts([Service] IApplicationDbContext context)
+        public IQueryable<AccountDto> TemplateAccounts([Service] IApplicationDbContext context)
         {
-            var result = context.Accounts
-                .Where(x => x.ParentAccountId == null)
-                .Select(MappingExtensions.GetAccountProjection(10))
-                .OrderBy(x => x.Name);
+            var ownerId = "seeder";
+            var accounts = context.Accounts
+                .Where(x => x.OwnerUserId == ownerId);
+
+            var result = _mapper.Map<IEnumerable<AccountDto>>(accounts.ToList())
+                .Where(x => x.ParentAccountId == Guid.Empty)
+                .AsQueryable();
 
             return result;
         }

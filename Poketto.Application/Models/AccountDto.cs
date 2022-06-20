@@ -11,9 +11,10 @@ namespace Poketto.Application.Models
         public string Description { get; set; } = string.Empty;
         public AccountType AccountType { get; set; }
         public string OwnerUserId { get; set; } = string.Empty;
+        public Guid ParentAccountId { get; set; }
         public bool IsPlaceholder { get; set; }
 
-        public IList<AccountDto>? ChildAccounts { get; set; }
+        public IEnumerable<AccountDto>? ChildAccounts { get; set; }
 
         public void CreateMap(Profile profile)
         {
