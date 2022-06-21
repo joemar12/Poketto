@@ -7,3 +7,12 @@
 * (only for first time setup) run this command to initialize Secret Manager: dotnet user-secrets init
 * run this command to set the contents of the 'secrets.json' file to the secret storage: type .\secrets.json | dotnet user-secrets set
 * don't forget to add the "secrets.json" file to .gitignore
+
+
+AzureAd configuration explanation
+
+* Instance	- "https://login.microsoftonline.com/"
+* Domain		- domainName.onmicrosoft.com
+* ClientId	- the application ID of the app registration with permission to use the protected API, i.e. the ReactJs App etc. (the app dependent to the API)
+* TenantId	- "common"
+* Audience	- the application ID of the app registration of the protected API, i.e. this API
