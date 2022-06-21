@@ -19,10 +19,12 @@ namespace Poketto.Api
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>();
 
+
+            var debugAzureAdConfig = configuration.GetSection("AzureAd").GetChildren();
+
             // Add services to the container.
             services.AddCors(options => options.AddPolicy("allowAny", o => o.AllowAnyOrigin()));
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"));
+            services.AddMicrosoftIdentityWebApiAuthentication(configuration);
             services.AddAuthorization();
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
