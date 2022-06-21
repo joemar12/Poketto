@@ -1,6 +1,6 @@
 ﻿App Secrets Local Setup
 * copy the AzureAd section (and any additional sections containing sensitive information) in appsettings.json (purposely left blank).
-  Make sure to leave these values blank on appsettings.json and appsettings.<environment>.json files.
+  Make sure to leave these values blank on appsettings.json and appsettings.environment.json files.
 * create a new file called "secrets.json" (preferably on the folder containing the Poketto.Api.csproj file) and paste the copied section.
 * set the values for the AzureAd configuration in "secrets.json" and save the file
 * open a terminal window and set the path to the root project folder of Poketto.Api
