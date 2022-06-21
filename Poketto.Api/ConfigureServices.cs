@@ -35,6 +35,7 @@ namespace Poketto.Api
         public static IServiceCollection AddGraphQLServices(this IServiceCollection services)
         {
             services.AddGraphQLServer()
+                .AddAuthorization()
                 .RegisterDbContext<ApplicationDbContext>()
                 .AddQueryType(q => q.Name(OperationTypeNames.Query))
                 .AddTypeExtension<ChartOfAccountsExtensions>()

@@ -6,7 +6,7 @@ using Poketto.Domain.Entities;
 
 namespace Poketto.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

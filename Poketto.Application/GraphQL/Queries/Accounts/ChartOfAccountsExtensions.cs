@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using HotChocolate.AspNetCore.Authorization;
 using Poketto.Application.Common.Interfaces;
 
 namespace Poketto.Application.GraphQL.Queries.Accounts
 {
     [ExtendObjectType(OperationTypeNames.Query)]
+    [Authorize]
     public class ChartOfAccountsExtensions
     {
         private readonly IMapper _mapper;
