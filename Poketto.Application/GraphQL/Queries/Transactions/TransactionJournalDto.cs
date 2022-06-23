@@ -13,7 +13,7 @@ namespace Poketto.Application.GraphQL.Queries.Transactions
         public TransactionType TransactionType { get; set; }
         public string OwnerUserId { get; set; } = string.Empty;
 
-        public IList<JournalEntry> JournalEntries { get; set; } = new List<JournalEntry>();
+        public IList<JournalEntryDto> JournalEntries { get; set; } = new List<JournalEntryDto>();
 
         public void CreateMap(Profile profile)
         {

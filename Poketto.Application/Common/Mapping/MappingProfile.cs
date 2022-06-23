@@ -12,9 +12,8 @@ namespace Poketto.Application.Common.Mapping
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
             var types = assembly.GetExportedTypes()
-                .Where(t => t.GetInterfaces().Any(i =>
-                    i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMappableFrom<>)) && !t.IsAbstract)
-                .ToList();
+                                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMappableFrom<>)) && !t.IsAbstract)
+                                .ToList();
 
             foreach (var type in types)
             {
