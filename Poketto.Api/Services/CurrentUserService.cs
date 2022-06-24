@@ -11,6 +11,6 @@ namespace Poketto.Api.Services
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        public string? GetCurrentUser() => _httpContextAccessor.HttpContext?.User?.FindFirstValue("preferred_username");
+        public string? GetCurrentUser() => _httpContextAccessor.HttpContext?.User?.FindFirstValue("emails");
     }
 }

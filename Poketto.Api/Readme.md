@@ -12,7 +12,17 @@
 AzureAd configuration explanation
 
 * Instance	- "https://login.microsoftonline.com/"
-* Domain		- domainName.onmicrosoft.com
+* Domain	- domainName.onmicrosoft.com
 * ClientId	- the application ID of the app registration with permission to use the protected API, i.e. the ReactJs App etc. (the app dependent to the API)
 * TenantId	- "common"
 * Audience	- the application ID of the app registration of the protected API, i.e. this API
+
+AzureB2C configuration sample
+
+"AzureAdB2C": {
+  "Instance": "https://<your-tenant-name>.b2clogin.com",
+  "ClientId": "<web-app-application-id>",
+  "Domain": "<your-b2c-domain>",
+  "SignedOutCallbackPath": "/signout/<your-sign-up-in-policy>",
+  "SignUpSignInPolicyId": "<your-sign-up-in-policy>"
+}
