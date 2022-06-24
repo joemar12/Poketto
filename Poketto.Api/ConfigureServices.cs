@@ -5,6 +5,7 @@ using Poketto.Application.Common.Interfaces;
 using Poketto.Application.GraphQL.Queries;
 using Poketto.Application.GraphQL.Queries.Accounts;
 using Poketto.Application.GraphQL.Queries.Transactions;
+using Poketto.Application.GraphQL.Security.Extensions;
 using Poketto.Infrastructure.Persistence;
 
 namespace Poketto.Api
@@ -38,10 +39,11 @@ namespace Poketto.Api
         {
             services.AddGraphQLServer()
                 .AddAuthorization()
+                .AddRequiredScopesAuthorization()
                 .RegisterDbContext<ApplicationDbContext>()
                 .AddQueryType(q => q.Name(OperationTypeNames.Query))
-                .AddTypeExtension<ChartOfAccountsExtensions>()
-                .AddTypeExtension<TransactionJournalExtensions>()
+                .AddTypeExtension<ChartOfAccountsQueryExtensions>()
+                .AddTypeExtension<TransactionsQueryExtensions>()
                 .AddProjections()
                 .AddFiltering()
                 .AddSorting();

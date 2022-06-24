@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
 using HotChocolate.AspNetCore.Authorization;
 using Poketto.Application.Common.Interfaces;
+using Poketto.Application.GraphQL.Security;
 
 namespace Poketto.Application.GraphQL.Queries.Accounts
 {
     [ExtendObjectType(OperationTypeNames.Query)]
-    public class ChartOfAccountsExtensions
+    public class ChartOfAccountsQueryExtensions
     {
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _currentUserService;
 
-        public ChartOfAccountsExtensions(IMapper mapper, ICurrentUserService currentUserService)
+        public ChartOfAccountsQueryExtensions(IMapper mapper, ICurrentUserService currentUserService)
         {
             _mapper = mapper;
             _currentUserService = currentUserService;
@@ -32,9 +33,11 @@ namespace Poketto.Application.GraphQL.Queries.Accounts
 
         [UseFiltering]
         [Authorize]
+        [RequireScopeAuthorization(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsRead")]
         public IQueryable<AccountDto> UserChartOfAccounts([Service] IApplicationDbContext context)
         {
             var ownerId = _currentUserService.GetCurrentUser();
+            var scopes = _currentUserService.GetCurrentUserScopes();
             var accounts = context.Accounts
                 .Where(x => x.OwnerUserId == ownerId);
 

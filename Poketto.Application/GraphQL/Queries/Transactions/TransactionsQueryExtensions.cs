@@ -1,25 +1,33 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HotChocolate.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Web;
+using Poketto.Application.Common.Options;
 using Poketto.Application.Common.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Poketto.Application.GraphQL.Security;
 
 namespace Poketto.Application.GraphQL.Queries.Transactions
 {
     [ExtendObjectType(OperationTypeNames.Query)]
-    public class TransactionJournalExtensions
+    public class TransactionsQueryExtensions
     {
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _currentUserService;
+        private ApplicationScopes _scopes = new ApplicationScopes();
 
-        public TransactionJournalExtensions(IMapper mapper, ICurrentUserService currentUserService)
+        public TransactionsQueryExtensions(IMapper mapper, ICurrentUserService currentUserService, IConfiguration config)
         {
             _mapper = mapper;
             _currentUserService = currentUserService;
+            config.GetSection(ApplicationScopes.ConfigSectionName).Bind(_scopes);
         }
 
         [UseFiltering]
         [Authorize]
-        public IQueryable<TransactionJournalDto> TransactionJournals([Service] IApplicationDbContext context)
+        [RequireScopeAuthorization(RequiredScopesConfigurationKey = "ApplicationScopes:TransactionsRead")]
+        public IQueryable<TransactionJournalDto> TransactionJournals([Service] IApplicationDbContext context,[Service] IHttpContextAccessor httpContextAccessor)
         {
             var currentUser = _currentUserService.GetCurrentUser();
             var transactionJournals = context.TransactionJournals
@@ -33,6 +41,7 @@ namespace Poketto.Application.GraphQL.Queries.Transactions
 
         [UseFiltering]
         [Authorize]
+        [RequireScopeAuthorization(RequiredScopesConfigurationKey = "ApplicationScopes:TransactionsRead")]
         public IQueryable<TransactionGroupDto> TransactionGroups([Service] IApplicationDbContext context)
         {
             var currentUser = _currentUserService.GetCurrentUser();
