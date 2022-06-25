@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using HotChocolate.AspNetCore.Authorization;
 using Poketto.Application.Common.Interfaces;
-using Poketto.Application.GraphQL.Security;
 
 namespace Poketto.Application.GraphQL.Queries.Accounts
 {
@@ -33,7 +32,7 @@ namespace Poketto.Application.GraphQL.Queries.Accounts
 
         [UseFiltering]
         [Authorize]
-        [RequireScopeAuthorization(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsRead")]
+        [RequiredScope(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsRead")]
         public IQueryable<AccountDto> UserChartOfAccounts([Service] IApplicationDbContext context)
         {
             var ownerId = _currentUserService.GetCurrentUser();

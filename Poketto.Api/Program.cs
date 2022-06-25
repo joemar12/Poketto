@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Logging;
 using Poketto.Api;
 using Poketto.Application;

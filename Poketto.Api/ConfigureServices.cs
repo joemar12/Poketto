@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
+﻿using Microsoft.Identity.Web;
 using Poketto.Api.Services;
 using Poketto.Application.Common.Interfaces;
-using Poketto.Application.GraphQL.Queries;
 using Poketto.Application.GraphQL.Queries.Accounts;
 using Poketto.Application.GraphQL.Queries.Transactions;
-using Poketto.Application.GraphQL.Security.Extensions;
 using Poketto.Infrastructure.Persistence;
 
 namespace Poketto.Api
@@ -19,9 +16,6 @@ namespace Poketto.Api
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>();
-
-
-            var debugAzureAdConfig = configuration.GetSection("AzureAd").GetChildren();
 
             // Add services to the container.
             services.AddCors(options => options.AddPolicy("allowAny", o => o.AllowAnyOrigin()));
@@ -39,7 +33,7 @@ namespace Poketto.Api
         {
             services.AddGraphQLServer()
                 .AddAuthorization()
-                .AddRequiredScopesAuthorization()
+                .AddRequiredScopeAuthorization()
                 .RegisterDbContext<ApplicationDbContext>()
                 .AddQueryType(q => q.Name(OperationTypeNames.Query))
                 .AddTypeExtension<ChartOfAccountsQueryExtensions>()

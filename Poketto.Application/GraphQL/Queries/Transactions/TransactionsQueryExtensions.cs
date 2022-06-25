@@ -2,11 +2,9 @@
 using AutoMapper.QueryableExtensions;
 using HotChocolate.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Identity.Web;
 using Poketto.Application.Common.Options;
 using Poketto.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Http;
-using Poketto.Application.GraphQL.Security;
 
 namespace Poketto.Application.GraphQL.Queries.Transactions
 {
@@ -26,7 +24,7 @@ namespace Poketto.Application.GraphQL.Queries.Transactions
 
         [UseFiltering]
         [Authorize]
-        [RequireScopeAuthorization(RequiredScopesConfigurationKey = "ApplicationScopes:TransactionsRead")]
+        [RequiredScope(RequiredScopesConfigurationKey = "ApplicationScopes:TransactionsRead")]
         public IQueryable<TransactionJournalDto> TransactionJournals([Service] IApplicationDbContext context,[Service] IHttpContextAccessor httpContextAccessor)
         {
             var currentUser = _currentUserService.GetCurrentUser();
@@ -41,7 +39,7 @@ namespace Poketto.Application.GraphQL.Queries.Transactions
 
         [UseFiltering]
         [Authorize]
-        [RequireScopeAuthorization(RequiredScopesConfigurationKey = "ApplicationScopes:TransactionsRead")]
+        [RequiredScope(RequiredScopesConfigurationKey = "ApplicationScopes:TransactionsRead")]
         public IQueryable<TransactionGroupDto> TransactionGroups([Service] IApplicationDbContext context)
         {
             var currentUser = _currentUserService.GetCurrentUser();
