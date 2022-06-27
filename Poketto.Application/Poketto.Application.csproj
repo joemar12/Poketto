@@ -7,11 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
+    <Compile Remove="GraphQL\Security\**" />
+    <EmbeddedResource Remove="GraphQL\Security\**" />
+    <None Remove="GraphQL\Security\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Custom.HotChocolate.AspNetCore.RequiredScopeAuthorization" Version="1.0.3" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="12.11.1" />
+    <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="12.11.1" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.11.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.6" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.25.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Poketto.Domain\Poketto.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="GraphQL\Mutations\" />
   </ItemGroup>
 
 </Project>

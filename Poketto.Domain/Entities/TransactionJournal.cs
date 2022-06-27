@@ -10,7 +10,7 @@ namespace Poketto.Domain.Entities
         public TransactionType TransactionType { get; set; }
         public string OwnerUserId { get; set; } = string.Empty;
 
-        public virtual IList<JournalEntry> JournalEntries { get; set; } = new List<JournalEntry>();
-        public virtual TransactionGroup TransactionGroup { get; set; } = new TransactionGroup();
+        public IList<JournalEntry> JournalEntries { get; set; } = new List<JournalEntry>();
+        public TransactionGroup TransactionGroup { get; set; } = new TransactionGroup();
     }
 }

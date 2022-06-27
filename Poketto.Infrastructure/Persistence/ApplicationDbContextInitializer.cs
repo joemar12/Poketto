@@ -46,7 +46,7 @@ namespace Poketto.Infrastructure.Persistence
             }
         }
 
-        public async Task TrySeedAsync()
+        private async Task TrySeedAsync()
         {
             var seeders = GetSeeders();
             foreach (var seeder in seeders)

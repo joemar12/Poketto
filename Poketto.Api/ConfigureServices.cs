@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
+﻿using Microsoft.Identity.Web;
 using Poketto.Api.Services;
 using Poketto.Application.Common.Interfaces;
+using Poketto.Application.GraphQL.Queries.Accounts;
+using Poketto.Application.GraphQL.Queries.Transactions;
 using Poketto.Infrastructure.Persistence;
 
 namespace Poketto.Api
@@ -18,13 +19,28 @@ namespace Poketto.Api
 
             // Add services to the container.
             services.AddCors(options => options.AddPolicy("allowAny", o => o.AllowAnyOrigin()));
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"));
+            services.AddMicrosoftIdentityWebApiAuthentication(configuration);
             services.AddAuthorization();
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            return services;
+        }
+
+        public static IServiceCollection AddGraphQLServices(this IServiceCollection services)
+        {
+            services.AddGraphQLServer()
+                .AddAuthorization()
+                .AddRequiredScopeAuthorization()
+                .RegisterDbContext<ApplicationDbContext>()
+                .AddQueryType(q => q.Name(OperationTypeNames.Query))
+                .AddTypeExtension<ChartOfAccountsQueryExtensions>()
+                .AddTypeExtension<TransactionsQueryExtensions>()
+                .AddProjections()
+                .AddFiltering()
+                .AddSorting();
 
             return services;
         }
