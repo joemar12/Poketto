@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Poketto.Infrastructure\Poketto.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

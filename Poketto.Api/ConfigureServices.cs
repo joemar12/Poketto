@@ -1,6 +1,7 @@
 ﻿using Microsoft.Identity.Web;
 using Poketto.Api.Services;
 using Poketto.Application.Common.Interfaces;
+using Poketto.Application.GraphQL.Mutations.Accounts;
 using Poketto.Application.GraphQL.Queries.Accounts;
 using Poketto.Application.GraphQL.Queries.Transactions;
 using Poketto.Infrastructure.Persistence;
@@ -34,13 +35,16 @@ namespace Poketto.Api
             services.AddGraphQLServer()
                 .AddAuthorization()
                 .AddRequiredScopeAuthorization()
-                .RegisterDbContext<ApplicationDbContext>()
+                .AddDefaultTransactionScopeHandler()
+                //.RegisterDbContext<ApplicationDbContext>()
                 .AddQueryType(q => q.Name(OperationTypeNames.Query))
-                .AddTypeExtension<ChartOfAccountsQueryExtensions>()
-                .AddTypeExtension<TransactionsQueryExtensions>()
+                .AddTypeExtension<ChartOfAccountsQueryExtension>()
+                .AddTypeExtension<TransactionsQueryExtension>()
                 .AddProjections()
                 .AddFiltering()
-                .AddSorting();
+                .AddSorting()
+                .AddMutationType(m => m.Name(OperationTypeNames.Mutation))
+                .AddTypeExtension<ChartOfAccountsMutationExtension>();
 
             return services;
         }

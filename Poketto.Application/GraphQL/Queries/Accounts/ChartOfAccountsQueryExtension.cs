@@ -5,12 +5,12 @@ using Poketto.Application.Common.Interfaces;
 namespace Poketto.Application.GraphQL.Queries.Accounts
 {
     [ExtendObjectType(OperationTypeNames.Query)]
-    public class ChartOfAccountsQueryExtensions
+    public class ChartOfAccountsQueryExtension
     {
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _currentUserService;
 
-        public ChartOfAccountsQueryExtensions(IMapper mapper, ICurrentUserService currentUserService)
+        public ChartOfAccountsQueryExtension(IMapper mapper, ICurrentUserService currentUserService)
         {
             _mapper = mapper;
             _currentUserService = currentUserService;
@@ -36,7 +36,6 @@ namespace Poketto.Application.GraphQL.Queries.Accounts
         public IQueryable<AccountDto> UserChartOfAccounts([Service] IApplicationDbContext context)
         {
             var ownerId = _currentUserService.GetCurrentUser();
-            var scopes = _currentUserService.GetCurrentUserScopes();
             var accounts = context.Accounts
                 .Where(x => x.OwnerUserId == ownerId);
 

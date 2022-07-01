@@ -18,8 +18,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    IdentityModelEventSource.ShowPII = true;
-    app.UseMigrationsEndPoint();
+    //IdentityModelEventSource.ShowPII = true;
+    //app.UseMigrationsEndPoint();
 
     using (var scope = app.Services.CreateScope())
     {

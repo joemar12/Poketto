@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GraphQL\Mutations\" />
+    <Folder Include="GraphQL\Mutations\Transactions\" />
   </ItemGroup>
 
 </Project>

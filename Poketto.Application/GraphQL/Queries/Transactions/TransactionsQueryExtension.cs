@@ -9,13 +9,13 @@ using Microsoft.AspNetCore.Http;
 namespace Poketto.Application.GraphQL.Queries.Transactions
 {
     [ExtendObjectType(OperationTypeNames.Query)]
-    public class TransactionsQueryExtensions
+    public class TransactionsQueryExtension
     {
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _currentUserService;
         private ApplicationScopes _scopes = new ApplicationScopes();
 
-        public TransactionsQueryExtensions(IMapper mapper, ICurrentUserService currentUserService, IConfiguration config)
+        public TransactionsQueryExtension(IMapper mapper, ICurrentUserService currentUserService, IConfiguration config)
         {
             _mapper = mapper;
             _currentUserService = currentUserService;
