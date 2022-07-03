@@ -3,7 +3,6 @@ using HotChocolate.AspNetCore.Authorization;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Application.GraphQL.Queries.Accounts;
 using Poketto.Domain.Entities;
-using Poketto.Domain.Enums;
 
 namespace Poketto.Application.GraphQL.Mutations.Accounts
 {
@@ -111,21 +110,5 @@ namespace Poketto.Application.GraphQL.Mutations.Accounts
                 return new AccountPayload() { Error = "The account being deleted was not found." };
             }
         }
-    }
-
-    public record AccountInput
-    {
-        public Guid? Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public AccountType AccountType { get; set; }
-        public Guid? ParentAccountId { get; set; }
-        public bool IsPlaceholder { get; set; }
-    }
-
-    public record AccountPayload
-    {
-        public AccountDto? Account { get; set; }
-        public string? Error { get; set; }
     }
 }
