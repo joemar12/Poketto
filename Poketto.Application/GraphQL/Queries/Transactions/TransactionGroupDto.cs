@@ -6,7 +6,7 @@ using Poketto.Domain.Enums;
 
 namespace Poketto.Application.GraphQL.Queries.Transactions
 {
-    public class TransactionGroupDto : BaseAuditableEntityDto, IMappableFrom<TransactionGroup>
+    public record TransactionGroupDto : BaseAuditableEntityDto, IMappableFrom<TransactionGroup>
     {
         public string Title { get; set; } = string.Empty;
         public string OwnerUserId { get; set; } = string.Empty;
@@ -26,7 +26,7 @@ namespace Poketto.Application.GraphQL.Queries.Transactions
                 return totalDebits;
             }
         }
-        public IList<JournalEntry> JournalEntries { get; set; } = new List<JournalEntry>();
+        public IList<JournalEntryDto> JournalEntries { get; set; } = new List<JournalEntryDto>();
 
         public void CreateMap(Profile profile)
         {

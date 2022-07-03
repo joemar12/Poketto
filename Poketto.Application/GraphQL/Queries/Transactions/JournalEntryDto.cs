@@ -5,7 +5,7 @@ using Poketto.Domain.Entities;
 
 namespace Poketto.Application.GraphQL.Queries.Transactions
 {
-    public class JournalEntryDto : BaseAuditableEntityDto, IMappableFrom<JournalEntry>
+    public record JournalEntryDto : BaseAuditableEntityDto, IMappableFrom<JournalEntry>
     {
         public double Amount { get; set; }
         public Guid TransactionJournalId { get; set; }

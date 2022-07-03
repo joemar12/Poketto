@@ -6,7 +6,7 @@ using Poketto.Domain.Enums;
 
 namespace Poketto.Application.GraphQL.Queries.Accounts
 {
-    public class AccountDto : BaseAuditableEntityDto, IMappableFrom<Account>
+    public record AccountDto : BaseAuditableEntityDto, IMappableFrom<Account>
     {
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

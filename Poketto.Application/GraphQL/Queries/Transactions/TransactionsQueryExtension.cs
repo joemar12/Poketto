@@ -22,24 +22,26 @@ namespace Poketto.Application.GraphQL.Queries.Transactions
             config.GetSection(ApplicationScopes.ConfigSectionName).Bind(_scopes);
         }
 
-        [UseFiltering]
         [Authorize]
         [RequiredScope(RequiredScopesConfigurationKey = "ApplicationScopes:TransactionsRead")]
-        public IQueryable<TransactionJournalDto> TransactionJournals([Service] IApplicationDbContext context,[Service] IHttpContextAccessor httpContextAccessor)
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<TransactionJournalDto> GetTransactionJournals([Service] IApplicationDbContext context,[Service] IHttpContextAccessor httpContextAccessor)
         {
             var currentUser = _currentUserService.GetCurrentUser();
             var transactionJournals = context.TransactionJournals
-                .Where(x => x.OwnerUserId == currentUser);
+                .Where(x => x.OwnerUserId == currentUser)
+                .ProjectTo<TransactionJournalDto>(_mapper.ConfigurationProvider);
 
-            var result = _mapper.Map<IEnumerable<TransactionJournalDto>>(transactionJournals.ToList())
-                .AsQueryable();
-
-            return result;
+            return transactionJournals;
         }
 
-        [UseFiltering]
         [Authorize]
         [RequiredScope(RequiredScopesConfigurationKey = "ApplicationScopes:TransactionsRead")]
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
         public IQueryable<TransactionGroupDto> TransactionGroups([Service] IApplicationDbContext context)
         {
             var currentUser = _currentUserService.GetCurrentUser();

@@ -17,7 +17,7 @@ namespace Poketto.Application.GraphQL.Queries.Accounts
         }
 
         [UseFiltering]
-        public IQueryable<AccountDto> TemplateAccounts([Service] IApplicationDbContext context)
+        public IQueryable<AccountDto> GetTemplateAccounts([Service] IApplicationDbContext context)
         {
             var ownerId = "seeder";
             var accounts = context.Accounts
@@ -30,10 +30,10 @@ namespace Poketto.Application.GraphQL.Queries.Accounts
             return result;
         }
 
-        [UseFiltering]
         [Authorize]
         [RequiredScope(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsRead")]
-        public IQueryable<AccountDto> UserChartOfAccounts([Service] IApplicationDbContext context)
+        [UseFiltering]
+        public IQueryable<AccountDto> GetUserAccounts([Service] IApplicationDbContext context)
         {
             var ownerId = _currentUserService.GetCurrentUser();
             var accounts = context.Accounts

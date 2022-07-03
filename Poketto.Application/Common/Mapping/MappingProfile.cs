@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Poketto.Application.GraphQL.Mutations.Accounts;
+using Poketto.Domain.Entities;
 using System.Reflection;
 
 namespace Poketto.Application.Common.Mapping
@@ -8,6 +10,9 @@ namespace Poketto.Application.Common.Mapping
         public MappingProfile()
         {
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+
+            //Dto to Entity mappings
+            CreateMap<AccountInput, Account>();
         }
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
