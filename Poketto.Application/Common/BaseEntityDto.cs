@@ -1,4 +1,4 @@
-﻿namespace Poketto.Application.Models
+﻿namespace Poketto.Application.Common
 {
     public abstract record BaseEntityDto
     {

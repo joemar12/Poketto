@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using HotChocolate.AspNetCore.Authorization;
+using Poketto.Application.Accounts;
 using Poketto.Application.Common.Interfaces;
-using Poketto.Application.GraphQL.Queries.Accounts;
 using Poketto.Domain.Entities;
 
-namespace Poketto.Application.GraphQL.Mutations.Accounts
+namespace Poketto.Application.GraphQL.Accounts
 {
     [ExtendObjectType(OperationTypeNames.Mutation)]
     [Authorize]
@@ -28,13 +28,13 @@ namespace Poketto.Application.GraphQL.Mutations.Accounts
 
             var userAccounts = templateAccounts
                 .ToList()
-                .Select(x => new Account() 
-                { 
-                    Name = x.Name, 
-                    AccountType = x.AccountType, 
-                    IsPlaceholder = x.IsPlaceholder, 
-                    ParentAccountId = x.ParentAccountId, 
-                    OwnerUserId = ownerId ?? String.Empty
+                .Select(x => new Account()
+                {
+                    Name = x.Name,
+                    AccountType = x.AccountType,
+                    IsPlaceholder = x.IsPlaceholder,
+                    ParentAccountId = x.ParentAccountId,
+                    OwnerUserId = ownerId ?? string.Empty
                 });
 
             context.Accounts.AddRange(userAccounts);

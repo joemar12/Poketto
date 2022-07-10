@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Poketto.Application.GraphQL.Mutations.Accounts;
+using Poketto.Application.GraphQL.Accounts;
 using Poketto.Domain.Entities;
 using System.Reflection;
 

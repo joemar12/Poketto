@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
+using Poketto.Application.Common;
 using Poketto.Application.Common.Mapping;
-using Poketto.Application.Models;
 using Poketto.Domain.Entities;
 using Poketto.Domain.Enums;
 
-namespace Poketto.Application.GraphQL.Queries.Transactions
+namespace Poketto.Application.Transactions
 {
     public record TransactionGroupDto : BaseAuditableEntityDto, IMappableFrom<TransactionGroup>
     {
         public string Title { get; set; } = string.Empty;
         public string OwnerUserId { get; set; } = string.Empty;
-        public double TotalDebits 
+        public double TotalDebits
         {
             get
             {

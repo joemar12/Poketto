@@ -1,9 +1,8 @@
 ﻿using Microsoft.Identity.Web;
 using Poketto.Api.Services;
 using Poketto.Application.Common.Interfaces;
-using Poketto.Application.GraphQL.Mutations.Accounts;
-using Poketto.Application.GraphQL.Queries.Accounts;
-using Poketto.Application.GraphQL.Queries.Transactions;
+using Poketto.Application.GraphQL.Accounts;
+using Poketto.Application.GraphQL.Transactions;
 using Poketto.Infrastructure.Persistence;
 
 namespace Poketto.Api

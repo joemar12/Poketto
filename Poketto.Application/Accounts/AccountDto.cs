@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Poketto.Application.Common;
 using Poketto.Application.Common.Mapping;
-using Poketto.Application.Models;
 using Poketto.Domain.Entities;
 using Poketto.Domain.Enums;
 
-namespace Poketto.Application.GraphQL.Queries.Accounts
+namespace Poketto.Application.Accounts
 {
     public record AccountDto : BaseAuditableEntityDto, IMappableFrom<Account>
     {

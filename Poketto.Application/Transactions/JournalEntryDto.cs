@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using Poketto.Application.Common;
 using Poketto.Application.Common.Mapping;
-using Poketto.Application.Models;
 using Poketto.Domain.Entities;
 
-namespace Poketto.Application.GraphQL.Queries.Transactions
+namespace Poketto.Application.Transactions
 {
     public record JournalEntryDto : BaseAuditableEntityDto, IMappableFrom<JournalEntry>
     {

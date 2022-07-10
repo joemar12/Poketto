@@ -3,6 +3,6 @@
     public interface ICurrentUserService
     {
         string? GetCurrentUser();
-        string? GetCurrentUserScopes();
+        IList<string>? GetCurrentUserScopes();
     }
 }

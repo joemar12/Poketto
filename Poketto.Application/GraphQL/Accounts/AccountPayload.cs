@@ -1,6 +1,6 @@
-﻿using Poketto.Application.GraphQL.Queries.Accounts;
+﻿using Poketto.Application.Accounts;
 
-namespace Poketto.Application.GraphQL.Mutations.Accounts
+namespace Poketto.Application.GraphQL.Accounts
 {
     public record AccountPayload
     {

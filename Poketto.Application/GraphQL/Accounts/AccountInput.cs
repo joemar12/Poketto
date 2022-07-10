@@ -1,6 +1,6 @@
 ﻿using Poketto.Domain.Enums;
 
-namespace Poketto.Application.GraphQL.Mutations.Accounts
+namespace Poketto.Application.GraphQL.Accounts
 {
     public record AccountInput
     {
