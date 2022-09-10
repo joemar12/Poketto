@@ -7,4 +7,10 @@ namespace Poketto.Application.GraphQL.Accounts
         public AccountDto? Account { get; set; }
         public string? Error { get; set; }
     }
+
+    public record AccountListPayload
+    {
+        public IQueryable<AccountDto>? Accounts { get; set; }
+        public string? Error { get; set; }
+    }
 }

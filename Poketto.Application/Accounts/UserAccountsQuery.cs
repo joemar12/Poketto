@@ -26,7 +26,7 @@ namespace Poketto.Application.Accounts
         {
             var ownerId = _currentUserService.GetCurrentUser();
             var accounts = _context.Accounts
-                .AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
                 .Where(x => x.OwnerUserId == ownerId);
 
             var result = _mapper.Map<IEnumerable<AccountDto>>(accounts.ToList())

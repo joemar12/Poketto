@@ -22,7 +22,7 @@ namespace Poketto.Application.Accounts
         {
             var ownerId = "seeder";
             var accounts = _context.Accounts
-                .AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
                 .Where(x => x.OwnerUserId == ownerId);
 
             var result = _mapper.Map<IEnumerable<AccountDto>>(accounts.ToList())

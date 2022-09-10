@@ -1,4 +1,3 @@
-using Microsoft.IdentityModel.Logging;
 using Poketto.Api;
 using Poketto.Application;
 using Poketto.Infrastructure;

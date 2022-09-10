@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using HotChocolate.AspNetCore.Authorization;
+using MediatR;
 using Poketto.Application.Accounts;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Domain.Entities;
@@ -7,8 +7,6 @@ using Poketto.Domain.Entities;
 namespace Poketto.Application.GraphQL.Accounts
 {
     [ExtendObjectType(OperationTypeNames.Mutation)]
-    [Authorize]
-    [RequiredScope(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsReadWrite")]
     public class ChartOfAccountsMutationExtension
     {
         private readonly IMapper _mapper;
@@ -20,47 +18,30 @@ namespace Poketto.Application.GraphQL.Accounts
             _currentUserService = currentUserService;
         }
 
-        public async Task<IQueryable<AccountDto>> InitializeFromTemplate([Service] IApplicationDbContext context)
+        public async Task<AccountListPayload> InitializeFromTemplate([Service] IMediator _mediator)
         {
-            var ownerId = _currentUserService.GetCurrentUser();
-            var templateAccounts = context.Accounts
-                .Where(x => x.OwnerUserId == "seeder");
-
-            var userAccounts = templateAccounts
-                .ToList()
-                .Select(x => new Account()
-                {
-                    Name = x.Name,
-                    AccountType = x.AccountType,
-                    IsPlaceholder = x.IsPlaceholder,
-                    ParentAccountId = x.ParentAccountId,
-                    OwnerUserId = ownerId ?? string.Empty
-                });
-
-            context.Accounts.AddRange(userAccounts);
-            await context.SaveChangesAsync(new CancellationToken());
-
-            var result = _mapper.Map<IEnumerable<AccountDto>>(userAccounts.ToList())
-                .Where(x => x.ParentAccountId == Guid.Empty)
-                .AsQueryable();
-
-            return result;
+            try
+            {
+                var result = await _mediator.Send(new InitializeUserAccountsFromTemplateCommand());
+                return new AccountListPayload() { Accounts = result };
+            }
+            catch (Exception)
+            {
+                return new AccountListPayload() { Error = "Accounts initialization failed." };
+            }
         }
 
-        public async Task<IQueryable<AccountDto>> PurgeAccounts([Service] IApplicationDbContext context)
+        public async Task<AccountListPayload> PurgeAccounts([Service] IMediator _mediator)
         {
-            var ownerId = _currentUserService.GetCurrentUser();
-            var userAccounts = context.Accounts
-                .Where(x => x.OwnerUserId == ownerId);
-
-            context.Accounts.RemoveRange(userAccounts);
-            await context.SaveChangesAsync(new CancellationToken());
-
-            var result = _mapper.Map<IEnumerable<AccountDto>>(userAccounts.ToList())
-                .Where(x => x.ParentAccountId == Guid.Empty)
-                .AsQueryable();
-
-            return result;
+            try
+            {
+                var result = await _mediator.Send(new PurgeUserAccountsCommand());
+                return new AccountListPayload() { Accounts = result };
+            }
+            catch (Exception)
+            {
+                return new AccountListPayload() { Error = "Purge operation failed." };
+            }
         }
 
         public async Task<AccountPayload> AddAccount(AccountInput input, [Service] IApplicationDbContext context)

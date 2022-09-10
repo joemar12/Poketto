@@ -14,7 +14,7 @@
         [GraphQLIgnore]
         public PayloadType PushError(params ErrorType[] errors)
         {
-            this.Errors.AddRange(errors);
+            Errors.AddRange(errors);
 
             return (PayloadType)this;
         }
@@ -22,9 +22,9 @@
         [GraphQLIgnore]
         public static PayloadType Error(params ErrorType[] errors)
         {
-            PayloadType u = new();
-            u.Errors.AddRange(errors);
-            return u;
+            PayloadType instance = new();
+            instance.Errors.AddRange(errors);
+            return instance;
         }
 
         [GraphQLIgnore]
