@@ -5,6 +5,7 @@
         public UpdateRecordException()
         {
         }
+
         public UpdateRecordException(string? message) : base(message)
         {
         }

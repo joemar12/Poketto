@@ -2,6 +2,6 @@
 {
     public interface IBaseError
     {
-        string? Message {get; set;}
+        string? Message { get; set; }
     }
 }

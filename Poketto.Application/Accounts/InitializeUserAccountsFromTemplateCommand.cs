@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Application.Common.Security;
 using Poketto.Domain.Entities;
@@ -69,8 +68,8 @@ namespace Poketto.Application.Accounts
                     AccountType = templateAccount.AccountType,
                     IsPlaceholder = templateAccount.IsPlaceholder,
                     OwnerUserId = ownerId ?? string.Empty,
-                    ChildAccounts = templateAccount.ChildAccounts != null && templateAccount.ChildAccounts.Count > 0 ? 
-                        MapAccountsFromTemplate(templateAccount.ChildAccounts, ownerId ?? string.Empty) : 
+                    ChildAccounts = templateAccount.ChildAccounts != null && templateAccount.ChildAccounts.Count > 0 ?
+                        MapAccountsFromTemplate(templateAccount.ChildAccounts, ownerId ?? string.Empty) :
                         null
                 };
                 userAccounts.Add(userAccount);

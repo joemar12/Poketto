@@ -7,6 +7,7 @@
         {
             Scopes = requiredScopes ?? throw new ArgumentNullException(nameof(requiredScopes));
         }
+
         public string[]? Scopes { get; set; }
         public string? RequiredScopesConfigurationKey { get; set; }
     }

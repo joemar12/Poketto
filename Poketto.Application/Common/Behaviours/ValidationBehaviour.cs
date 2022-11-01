@@ -4,7 +4,7 @@ using ValidationException = Poketto.Application.Common.Exceptions.ValidationExce
 
 namespace Poketto.Application.Common.Behaviours
 {
-    public class ValidationBehaviour<TRequest, TResponse> 
+    public class ValidationBehaviour<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
          where TRequest : IRequest<TResponse>
     {

@@ -29,7 +29,6 @@ namespace Poketto.Application.Common.Mapping
                             destChildren.SetValue(destination, mappedChildren, null);
                             result.Add(destination);
                         }
-
                     }
                 }
             }

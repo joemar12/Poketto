@@ -14,6 +14,7 @@ namespace Poketto.Application.Common.Mapping
             //Dto to Entity mappings
             CreateMap<AccountInput, Account>();
         }
+
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
             var types = assembly.GetExportedTypes()
@@ -28,7 +29,6 @@ namespace Poketto.Application.Common.Mapping
                     ?? type.GetInterface("IMappableFrom`1")?.GetMethod("CreateMap");
 
                 methodInfo?.Invoke(instance, new object[] { this });
-
             }
         }
     }

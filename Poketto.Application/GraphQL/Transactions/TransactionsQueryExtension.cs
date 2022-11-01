@@ -1,5 +1,5 @@
-﻿using Poketto.Application.Transactions;
-using MediatR;
+﻿using MediatR;
+using Poketto.Application.Transactions;
 
 namespace Poketto.Application.GraphQL.Transactions
 {
@@ -25,6 +25,5 @@ namespace Poketto.Application.GraphQL.Transactions
 
             return result;
         }
-
     }
 }

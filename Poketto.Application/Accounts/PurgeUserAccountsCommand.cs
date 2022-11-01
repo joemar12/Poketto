@@ -7,7 +7,8 @@ using Poketto.Domain.Entities;
 namespace Poketto.Application.Accounts
 {
     [Authorize(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsReadWrite")]
-    public class PurgeUserAccountsCommand : IRequest<IQueryable<AccountDto>> { }
+    public class PurgeUserAccountsCommand : IRequest<IQueryable<AccountDto>>
+    { }
 
     public class PurgeUserAccountsCommandHandler : IRequestHandler<PurgeUserAccountsCommand, IQueryable<AccountDto>>
     {
@@ -21,21 +22,25 @@ namespace Poketto.Application.Accounts
             _mapper = mapper;
             _currentUserService = currentUserService;
         }
+
         public async Task<IQueryable<AccountDto>> Handle(PurgeUserAccountsCommand request, CancellationToken cancellationToken)
         {
             var ownerId = _currentUserService.GetCurrentUser();
             var userAccounts = _context.Accounts
                 .Where(x => x.OwnerUserId == ownerId);
 
-            foreach (var account in userAccounts.Where(x => x.ChildAccounts == null || x.ChildAccounts.Count < 1))
+            foreach (var account in userAccounts.Where(x => (x.ChildAccounts == null ||
+                                                             x.ChildAccounts.Count < 1) &&
+                                                             !x.IsPlaceholder &&
+                                                             x.JournalEntries.Count == 0))
             {
-                if (account.ParentAccount != null )
+                _context.Accounts.Remove(account);
+                if (account.ParentAccount != null)
                 {
                     DeleteParentAccount(account.ParentAccount);
                 }
             }
 
-            _context.Accounts.RemoveRange(userAccounts);
             await _context.SaveChangesAsync(new CancellationToken());
 
             var result = _mapper.Map<IEnumerable<AccountDto>>(userAccounts.ToList())
@@ -47,11 +52,11 @@ namespace Poketto.Application.Accounts
 
         private void DeleteParentAccount(Account account)
         {
-            if (account.ParentAccount != null && (account.JournalEntries == null || account.JournalEntries.Count < 1))
+            _context.Accounts.Remove(account);
+            if (account.ParentAccount != null)
             {
                 DeleteParentAccount(account.ParentAccount);
             }
-
         }
     }
 }

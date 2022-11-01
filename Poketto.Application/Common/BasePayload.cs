@@ -1,6 +1,6 @@
 ﻿namespace Poketto.Application.Common
 {
-    public abstract class BasePayload<PayloadType, ErrorType> : IBasePayload 
+    public abstract class BasePayload<PayloadType, ErrorType> : IBasePayload
         where PayloadType : BasePayload<PayloadType, ErrorType>, new()
         where ErrorType : IBaseError
     {
@@ -36,7 +36,6 @@
         [GraphQLIgnore]
         public void AddError(IBaseError error)
         {
-
             if (error is ErrorType)
             {
                 ErrorType tmp = (ErrorType)error;

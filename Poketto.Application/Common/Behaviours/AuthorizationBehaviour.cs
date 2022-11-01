@@ -6,8 +6,8 @@ using System.Reflection;
 
 namespace Poketto.Application.Common.Behaviours
 {
-    public class AuthorizationBehaviour<TRequest, TResponse> 
-        : IPipelineBehavior<TRequest, TResponse> 
+    public class AuthorizationBehaviour<TRequest, TResponse>
+        : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         private readonly ICurrentUserService _currentUserService;

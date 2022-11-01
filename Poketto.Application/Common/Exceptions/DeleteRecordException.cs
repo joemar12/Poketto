@@ -5,6 +5,7 @@
         public DeleteRecordException()
         {
         }
+
         public DeleteRecordException(string? message) : base(message)
         {
         }
