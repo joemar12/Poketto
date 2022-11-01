@@ -7,22 +7,22 @@ using Poketto.Application.Common.Security;
 namespace Poketto.Application.Accounts
 {
     [Authorize(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsRead")]
-    public record UserAccountsQuery : IRequest<IQueryable<AccountDto>> { }
+    public record AccountsQuery : IRequest<IQueryable<AccountDto>> { }
 
-    public class UserAccountsQueryHandler : IRequestHandler<UserAccountsQuery, IQueryable<AccountDto>>
+    public class AccountsQueryHandler : IRequestHandler<AccountsQuery, IQueryable<AccountDto>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _currentUserService;
 
-        public UserAccountsQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IMapper mapper)
+        public AccountsQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
             _currentUserService = currentUserService;
         }
 
-        public Task<IQueryable<AccountDto>> Handle(UserAccountsQuery request, CancellationToken cancellationToken)
+        public Task<IQueryable<AccountDto>> Handle(AccountsQuery request, CancellationToken cancellationToken)
         {
             var ownerId = _currentUserService.GetCurrentUser();
             var accounts = _context.Accounts

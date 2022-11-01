@@ -7,22 +7,22 @@ using Poketto.Domain.Entities;
 namespace Poketto.Application.Accounts
 {
     [Authorize(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsReadWrite")]
-    public record InitializeUserAccountsFromTemplateCommand : IRequest<IQueryable<AccountDto>> { }
+    public record InitializeAccountsFromTemplateCommand : IRequest<IQueryable<AccountDto>> { }
 
-    public class InitializeUserAccountsFromTemplateCommandHandler : IRequestHandler<InitializeUserAccountsFromTemplateCommand, IQueryable<AccountDto>>
+    public class InitializeAccountsFromTemplateCommandHandler : IRequestHandler<InitializeAccountsFromTemplateCommand, IQueryable<AccountDto>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _currentUserService;
 
-        public InitializeUserAccountsFromTemplateCommandHandler(IApplicationDbContext context, IMapper mapper, ICurrentUserService currentUserService)
+        public InitializeAccountsFromTemplateCommandHandler(IApplicationDbContext context, IMapper mapper, ICurrentUserService currentUserService)
         {
             _context = context;
             _mapper = mapper;
             _currentUserService = currentUserService;
         }
 
-        public async Task<IQueryable<AccountDto>> Handle(InitializeUserAccountsFromTemplateCommand request, CancellationToken cancellationToken)
+        public async Task<IQueryable<AccountDto>> Handle(InitializeAccountsFromTemplateCommand request, CancellationToken cancellationToken)
         {
             var ownerId = _currentUserService.GetCurrentUser();
             var templateAccounts = _context.Accounts

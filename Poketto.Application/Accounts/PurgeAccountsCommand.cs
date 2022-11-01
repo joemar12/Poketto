@@ -7,23 +7,23 @@ using Poketto.Domain.Entities;
 namespace Poketto.Application.Accounts
 {
     [Authorize(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsReadWrite")]
-    public class PurgeUserAccountsCommand : IRequest<IQueryable<AccountDto>>
+    public class PurgeAccountsCommand : IRequest<IQueryable<AccountDto>>
     { }
 
-    public class PurgeUserAccountsCommandHandler : IRequestHandler<PurgeUserAccountsCommand, IQueryable<AccountDto>>
+    public class PurgeAccountsCommandHandler : IRequestHandler<PurgeAccountsCommand, IQueryable<AccountDto>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _currentUserService;
 
-        public PurgeUserAccountsCommandHandler(IApplicationDbContext context, IMapper mapper, ICurrentUserService currentUserService)
+        public PurgeAccountsCommandHandler(IApplicationDbContext context, IMapper mapper, ICurrentUserService currentUserService)
         {
             _context = context;
             _mapper = mapper;
             _currentUserService = currentUserService;
         }
 
-        public async Task<IQueryable<AccountDto>> Handle(PurgeUserAccountsCommand request, CancellationToken cancellationToken)
+        public async Task<IQueryable<AccountDto>> Handle(PurgeAccountsCommand request, CancellationToken cancellationToken)
         {
             var ownerId = _currentUserService.GetCurrentUser();
             var userAccounts = _context.Accounts
