@@ -1,4 +1,3 @@
-using Microsoft.IdentityModel.Logging;
 using Poketto.Api;
 using Poketto.Application;
 using Poketto.Infrastructure;
@@ -18,8 +17,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    IdentityModelEventSource.ShowPII = true;
-    app.UseMigrationsEndPoint();
+    //IdentityModelEventSource.ShowPII = true;
+    //app.UseMigrationsEndPoint();
 
     using (var scope = app.Services.CreateScope())
     {

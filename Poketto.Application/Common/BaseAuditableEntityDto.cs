@@ -1,6 +1,6 @@
-﻿namespace Poketto.Application.Models
+﻿namespace Poketto.Application.Common
 {
-    public abstract class BaseAuditableEntityDto : BaseEntityDto
+    public abstract record BaseAuditableEntityDto : BaseEntityDto
     {
         public DateTime Created { get; set; }
         public string? CreatedBy { get; set; }

@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using Poketto.Application.Common;
 using Poketto.Application.Common.Mapping;
-using Poketto.Application.Models;
 using Poketto.Domain.Entities;
 using Poketto.Domain.Enums;
 
-namespace Poketto.Application.GraphQL.Queries.Transactions
+namespace Poketto.Application.Transactions
 {
-    public class TransactionJournalDto : BaseAuditableEntityDto, IMappableFrom<TransactionJournal>
+    public record TransactionJournalDto : BaseAuditableEntityDto, IMappableFrom<TransactionJournal>
     {
         public string Description { get; set; } = string.Empty;
         public Guid TransactionGroupId { get; set; }

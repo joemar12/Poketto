@@ -1,4 +1,5 @@
-﻿using Poketto.Application.Common.Interfaces;
+﻿using Microsoft.Identity.Web;
+using Poketto.Application.Common.Interfaces;
 using System.Security.Claims;
 
 namespace Poketto.Api.Services
@@ -14,9 +15,18 @@ namespace Poketto.Api.Services
 
         public string? GetCurrentUser() => _httpContextAccessor.HttpContext?.User?.FindFirstValue("emails");
 
-        public string? GetCurrentUserScopes()
+        public IList<string>? GetCurrentUserScopes()
         {
-            return _httpContextAccessor.HttpContext?.User?.FindFirstValue("http://schemas.microsoft.com/identity/claims/scope");
+            var result = new List<string>();
+            var userClaimsPrincipal = _httpContextAccessor.HttpContext?.User;
+            if (userClaimsPrincipal is not null)
+            {
+                var scopeClaims = userClaimsPrincipal.FindAll(ClaimConstants.Scope)
+                    .Union(userClaimsPrincipal.FindAll(ClaimConstants.Scp))
+                    .ToList();
+                result.AddRange(scopeClaims.SelectMany(x => x.Value.Split(' ')).ToList());
+            }
+            return result;
         }
     }
 }

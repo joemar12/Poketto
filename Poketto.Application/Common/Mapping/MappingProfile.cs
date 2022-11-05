@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using Poketto.Application.Accounts;
+using Poketto.Application.GraphQL.Accounts;
+using Poketto.Domain.Entities;
 using System.Reflection;
 
 namespace Poketto.Application.Common.Mapping
@@ -8,7 +11,14 @@ namespace Poketto.Application.Common.Mapping
         public MappingProfile()
         {
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+
+            //command to entity mappings
+            CreateMap<AddAccountCommand, Account>();
+
+            //Dto to Entity mappings
+            CreateMap<AccountInput, Account>();
         }
+
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
             var types = assembly.GetExportedTypes()
@@ -23,7 +33,6 @@ namespace Poketto.Application.Common.Mapping
                     ?? type.GetInterface("IMappableFrom`1")?.GetMethod("CreateMap");
 
                 methodInfo?.Invoke(instance, new object[] { this });
-
             }
         }
     }

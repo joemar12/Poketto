@@ -11,7 +11,7 @@ namespace Poketto.Domain.Entities
         public string OwnerUserId { get; set; } = string.Empty;
         public bool IsPlaceholder { get; set; }
 
-        public IList<JournalEntry> JournalEntries { get; set; } =new List<JournalEntry>();
+        public IList<JournalEntry> JournalEntries { get; set; } = new List<JournalEntry>();
         public Guid? ParentAccountId { get; set; }
         public Account? ParentAccount { get; set; }
         public IList<Account>? ChildAccounts { get; set; }

@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using System.Linq.Expressions;
-using System.Reflection;
 
-namespace Poketto.Application.Common.Mapping.Utils
+namespace Poketto.Application.Common.Mapping
 {
     public static class MappingExtensions
     {
@@ -26,12 +24,11 @@ namespace Poketto.Application.Common.Mapping.Utils
                         {
                             var mappedChildren = MapToHierarchy<TSource, TDestination>(sourceChildren.GetValue(item, null) as IEnumerable<TSource> ?? new List<TSource>(),
                                                                                        sourceChildrenPropName,
-                                                                                       destinationChildrenPropName, 
+                                                                                       destinationChildrenPropName,
                                                                                        mapper);
                             destChildren.SetValue(destination, mappedChildren, null);
                             result.Add(destination);
                         }
-
                     }
                 }
             }
