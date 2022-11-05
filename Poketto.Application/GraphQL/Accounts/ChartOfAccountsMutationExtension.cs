@@ -22,7 +22,7 @@ namespace Poketto.Application.GraphQL.Accounts
         {
             try
             {
-                var result = await _mediator.Send(new InitializeUserAccountsFromTemplateCommand());
+                var result = await _mediator.Send(new InitializeAccountsFromTemplateCommand());
                 return new AccountListPayload() { Accounts = result };
             }
             catch (Exception)
@@ -35,7 +35,7 @@ namespace Poketto.Application.GraphQL.Accounts
         {
             try
             {
-                var result = await _mediator.Send(new PurgeUserAccountsCommand());
+                var result = await _mediator.Send(new PurgeAccountsCommand());
                 return new AccountListPayload() { Accounts = result };
             }
             catch (Exception)

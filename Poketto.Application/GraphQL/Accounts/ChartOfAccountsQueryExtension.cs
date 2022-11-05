@@ -17,7 +17,7 @@ namespace Poketto.Application.GraphQL.Accounts
         [UseFiltering]
         public async Task<IQueryable<AccountDto>> GetUserAccounts([Service] IMediator _mediator)
         {
-            var result = await _mediator.Send(new UserAccountsQuery());
+            var result = await _mediator.Send(new AccountsQuery());
 
             return result;
         }
