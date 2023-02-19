@@ -6,7 +6,7 @@ using Poketto.Domain.Enums;
 
 namespace Poketto.Application.Transactions
 {
-    public record TransactionJournalDto : BaseAuditableEntityDto, IMappableFrom<TransactionJournal>
+    public record TransactionJournalDto : BaseAuditableEntityDto, IMappable<TransactionJournal>
     {
         public string Description { get; set; } = string.Empty;
         public Guid TransactionGroupId { get; set; }

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Poketto.Application.Accounts
+namespace Poketto.Application.Accounts.Commands
 {
     public class DeleteAccountCommand : IRequest<AccountDto>
     {

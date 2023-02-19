@@ -5,7 +5,7 @@ using Poketto.Domain.Entities;
 
 namespace Poketto.Application.Transactions
 {
-    public record JournalEntryDto : BaseAuditableEntityDto, IMappableFrom<JournalEntry>
+    public record JournalEntryDto : BaseAuditableEntityDto, IMappable<JournalEntry>
     {
         public double Amount { get; set; }
         public Guid TransactionJournalId { get; set; }

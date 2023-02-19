@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Poketto.Application.Accounts;
+using Poketto.Application.Accounts.Commands;
 using Poketto.Application.GraphQL.Accounts;
 using Poketto.Domain.Entities;
 using System.Reflection;
@@ -22,7 +22,7 @@ namespace Poketto.Application.Common.Mapping
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
             var types = assembly.GetExportedTypes()
-                                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMappableFrom<>)) && !t.IsAbstract)
+                                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMappable<>)) && !t.IsAbstract)
                                 .ToList();
 
             foreach (var type in types)
@@ -30,7 +30,7 @@ namespace Poketto.Application.Common.Mapping
                 var instance = Activator.CreateInstance(type);
 
                 var methodInfo = type.GetMethod("CreateMap")
-                    ?? type.GetInterface("IMappableFrom`1")?.GetMethod("CreateMap");
+                    ?? type.GetInterface("IMappable`1")?.GetMethod("CreateMap");
 
                 methodInfo?.Invoke(instance, new object[] { this });
             }

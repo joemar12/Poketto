@@ -18,7 +18,14 @@ namespace Poketto.Api
                 .AddDbContextCheck<ApplicationDbContext>();
 
             // Add services to the container.
-            services.AddCors(options => options.AddPolicy("allowAny", o => o.AllowAnyOrigin()));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("poketto-client", policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000");
+                    policy.WithHeaders("*");
+                });
+            });
             services.AddMicrosoftIdentityWebApiAuthentication(configuration);
             services.AddAuthorization();
             services.AddControllers();

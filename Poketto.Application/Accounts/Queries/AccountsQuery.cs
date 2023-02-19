@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Application.Common.Security;
 
-namespace Poketto.Application.Accounts
+namespace Poketto.Application.Accounts.Queries
 {
     [Authorize(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsRead")]
     public record AccountsQuery : IRequest<IQueryable<AccountDto>> { }

@@ -5,11 +5,6 @@ using Poketto.Application.Common.Interfaces;
 using Poketto.Infrastructure.Persistence;
 using Poketto.Infrastructure.Persistence.Interceptors;
 using Poketto.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Poketto.Infrastructure
 {

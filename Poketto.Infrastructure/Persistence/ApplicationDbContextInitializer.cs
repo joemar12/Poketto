@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Poketto.Domain.Entities;
 using Poketto.Infrastructure.Persistence.Seeders;
 using System.Reflection;
 

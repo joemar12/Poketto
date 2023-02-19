@@ -5,7 +5,7 @@ using Poketto.Application.Common.Security;
 using Poketto.Domain.Entities;
 using Poketto.Domain.Enums;
 
-namespace Poketto.Application.Accounts
+namespace Poketto.Application.Accounts.Commands
 {
     [Authorize(RequiredScopesConfigurationKey = "ChartOfAccountsReadWrite")]
     public class AddAccountCommand : IRequest<AccountDto>

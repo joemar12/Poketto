@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Poketto.Application.Common.Interfaces;
 
-namespace Poketto.Application.Accounts
+namespace Poketto.Application.Accounts.Queries
 {
     public record TemplateAccountsQuery : IRequest<IQueryable<AccountDto>> { }
 

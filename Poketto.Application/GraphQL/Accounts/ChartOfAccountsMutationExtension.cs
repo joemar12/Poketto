@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Poketto.Application.Accounts;
+using Poketto.Application.Accounts.Commands;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Domain.Entities;
 

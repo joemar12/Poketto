@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
+using Poketto.Application.Common;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Application.Common.Security;
 using Poketto.Domain.Entities;
 
-namespace Poketto.Application.Accounts
+namespace Poketto.Application.Accounts.Commands
 {
     [Authorize(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsReadWrite")]
     public record InitializeAccountsFromTemplateCommand : IRequest<IQueryable<AccountDto>> { }
@@ -26,7 +27,7 @@ namespace Poketto.Application.Accounts
         {
             var ownerId = _currentUserService.GetCurrentUser();
             var templateAccounts = _context.Accounts
-                .Where(x => x.OwnerUserId == "seeder");
+                .Where(x => x.OwnerUserId == Constants.SeederUserName);
 
             var userAccounts = new List<Account>();
 

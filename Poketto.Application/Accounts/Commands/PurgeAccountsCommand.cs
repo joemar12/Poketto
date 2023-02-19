@@ -4,7 +4,7 @@ using Poketto.Application.Common.Interfaces;
 using Poketto.Application.Common.Security;
 using Poketto.Domain.Entities;
 
-namespace Poketto.Application.Accounts
+namespace Poketto.Application.Accounts.Commands
 {
     [Authorize(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsReadWrite")]
     public class PurgeAccountsCommand : IRequest<IQueryable<AccountDto>>

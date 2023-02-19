@@ -39,7 +39,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseRouting();
-app.UseCors();
+app.UseCors("poketto-client");
 app.UseAuthentication();
 app.UseAuthorization();
 

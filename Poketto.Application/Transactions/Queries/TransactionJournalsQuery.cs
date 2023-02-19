@@ -5,31 +5,31 @@ using Microsoft.EntityFrameworkCore;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Application.Common.Security;
 
-namespace Poketto.Application.Transactions
+namespace Poketto.Application.Transactions.Queries
 {
     [Authorize(RequiredScopesConfigurationKey = "ApplicationScopes:TransactionsRead")]
-    public record TransactionGroupsQuery : IRequest<IQueryable<TransactionGroupDto>> { }
+    public record TransactionJournalsQuery : IRequest<IQueryable<TransactionJournalDto>> { }
 
-    public class TransactionGroupsQueryHandler : IRequestHandler<TransactionGroupsQuery, IQueryable<TransactionGroupDto>>
+    public class TransactionJournalsQueryHandler : IRequestHandler<TransactionJournalsQuery, IQueryable<TransactionJournalDto>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _currentUserService;
 
-        public TransactionGroupsQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IMapper mapper)
+        public TransactionJournalsQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
             _currentUserService = currentUserService;
         }
 
-        public Task<IQueryable<TransactionGroupDto>> Handle(TransactionGroupsQuery request, CancellationToken cancellationToken)
+        public Task<IQueryable<TransactionJournalDto>> Handle(TransactionJournalsQuery request, CancellationToken cancellationToken)
         {
             var ownerId = _currentUserService.GetCurrentUser();
-            var result = _context.TransactionGroups
+            var result = _context.TransactionJournals
                 .AsNoTracking()
                 .Where(x => x.OwnerUserId == ownerId)
-                .ProjectTo<TransactionGroupDto>(_mapper.ConfigurationProvider);
+                .ProjectTo<TransactionJournalDto>(_mapper.ConfigurationProvider);
 
             return Task.FromResult(result);
         }

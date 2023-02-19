@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Poketto.Application.Accounts;
+using Poketto.Application.Accounts.Queries;
 
 namespace Poketto.Application.GraphQL.Accounts
 {
