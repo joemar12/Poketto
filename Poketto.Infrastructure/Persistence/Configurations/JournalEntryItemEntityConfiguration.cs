@@ -9,6 +9,10 @@ namespace Poketto.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<JournalEntryItem> builder)
         {
             builder.ToTable("JournalEntryItems");
+            builder.Property(x => x.Description)
+                .HasMaxLength(500)
+                .IsRequired();
+
             builder
                 .HasOne(x => x.Account)
                 .WithMany(x => x.JournalEntryItems)

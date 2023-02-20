@@ -2,9 +2,11 @@
 using MediatR;
 using Poketto.Application.Common.Exceptions;
 using Poketto.Application.Common.Interfaces;
+using Poketto.Application.Common.Security;
 
 namespace Poketto.Application.Accounts.Commands
 {
+    [Authorize(RequiredScopesConfigurationKey = "ApplicationScopes:ChartOfAccountsReadWrite")]
     public class DeleteAccountCommand : IRequest<AccountDto>
     {
         public Guid Id { get; set; }

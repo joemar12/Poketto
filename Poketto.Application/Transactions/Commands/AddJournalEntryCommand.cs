@@ -6,7 +6,10 @@ namespace Poketto.Application.Transactions.Commands
 {
     public class AddJournalEntryCommand : IRequest<JournalEntryDto>
     {
-
+        public string RefCode { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public DateTime JournalEntryDate { get; set; }
+        public IList<JournalEntryItemDto> JournalEntryItems { get; set; } = new List<JournalEntryItemDto>();
     }
 
     public class AddJournalEntryCommandHandler : IRequestHandler<AddJournalEntryCommand, JournalEntryDto>

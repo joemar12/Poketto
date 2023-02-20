@@ -40,7 +40,13 @@ namespace Poketto.Application.Common.Behaviours
                     {
                         if (x.Scopes is null || x.Scopes.Length < 1)
                         {
-                            return _config.GetValue<string>(x.RequiredScopesConfigurationKey).Split(' ').ToList();
+                            var scopesFromConfig = new List<string>();
+                            var config = _config.GetValue<string>(x.RequiredScopesConfigurationKey ?? string.Empty);
+                            if (config is not null)
+                            {
+                                scopesFromConfig = config.Split(' ').ToList();
+                            }
+                            return scopesFromConfig;
                         }
                         else
                         {
