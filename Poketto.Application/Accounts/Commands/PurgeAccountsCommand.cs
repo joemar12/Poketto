@@ -32,7 +32,7 @@ namespace Poketto.Application.Accounts.Commands
             foreach (var account in userAccounts.Where(x => (x.ChildAccounts == null ||
                                                              x.ChildAccounts.Count < 1) &&
                                                              !x.IsPlaceholder &&
-                                                             x.JournalEntries.Count == 0))
+                                                             x.JournalEntryItems.Count == 0))
             {
                 _context.Accounts.Remove(account);
                 if (account.ParentAccount != null)

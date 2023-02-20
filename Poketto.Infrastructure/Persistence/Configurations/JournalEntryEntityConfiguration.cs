@@ -4,12 +4,13 @@ using Poketto.Domain.Entities;
 
 namespace Poketto.Infrastructure.Persistence.Configurations
 {
-    public class TransactionGroupEntityConfiguration : IEntityTypeConfiguration<TransactionGroup>
+    public class JournalEntryEntityConfiguration : IEntityTypeConfiguration<JournalEntry>
     {
-        public void Configure(EntityTypeBuilder<TransactionGroup> builder)
+        public void Configure(EntityTypeBuilder<JournalEntry> builder)
         {
-            builder.Property(x => x.Title)
-                .HasMaxLength(300)
+            builder.ToTable("JournalEntries");
+            builder.Property(x => x.Description)
+                .HasMaxLength(500)
                 .IsRequired();
 
             builder.Property(x => x.OwnerUserId)

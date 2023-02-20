@@ -6,7 +6,7 @@ using Poketto.Domain.Enums;
 
 namespace Poketto.Application.Accounts
 {
-    public record AccountDto : BaseAuditableEntityDto, IMappable<Account>
+    public record AccountDto : BaseAuditableEntityDto
     {
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
@@ -16,10 +16,5 @@ namespace Poketto.Application.Accounts
         public bool IsPlaceholder { get; set; }
 
         public IEnumerable<AccountDto>? ChildAccounts { get; set; }
-
-        public void CreateMap(Profile profile)
-        {
-            profile.CreateMap<Account, AccountDto>();
-        }
     }
 }

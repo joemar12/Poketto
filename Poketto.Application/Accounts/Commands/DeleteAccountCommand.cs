@@ -2,12 +2,6 @@
 using MediatR;
 using Poketto.Application.Common.Exceptions;
 using Poketto.Application.Common.Interfaces;
-using Poketto.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Poketto.Application.Accounts.Commands
 {

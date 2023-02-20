@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Domain.Entities;
 using Poketto.Infrastructure.Persistence.Interceptors;
@@ -20,11 +19,9 @@ namespace Poketto.Infrastructure.Persistence
         }
         public DbSet<Account> Accounts => Set<Account>();
 
-        public DbSet<JournalEntry> Transactions => Set<JournalEntry>();
+        public DbSet<JournalEntryItem> JournalEntryItems => Set<JournalEntryItem>();
 
-        public DbSet<TransactionJournal> TransactionJournals => Set<TransactionJournal>();
-
-        public DbSet<TransactionGroup> TransactionGroups => Set<TransactionGroup>();
+        public DbSet<JournalEntry> JournalEntries => Set<JournalEntry>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,22 +1,14 @@
-﻿using AutoMapper;
-using Poketto.Application.Common;
-using Poketto.Application.Common.Mapping;
-using Poketto.Domain.Entities;
+﻿using Poketto.Application.Common;
 
 namespace Poketto.Application.Transactions
 {
-    public record JournalEntryDto : BaseAuditableEntityDto, IMappable<JournalEntry>
+    public record JournalEntryDto : BaseAuditableEntityDto
     {
-        public double Amount { get; set; }
-        public Guid TransactionJournalId { get; set; }
-        public Guid AccountId { get; set; }
-        public string AccountName { get; set; } = string.Empty;
-        public TransactionJournalDto TransactionJournal { get; set; } = new TransactionJournalDto();
+        public string RefCode { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public DateTime JournalEntryDate { get; set; }
+        public string OwnerUserId { get; set; } = string.Empty;
 
-        public void CreateMap(Profile profile)
-        {
-            profile.CreateMap<JournalEntry, JournalEntryDto>()
-                .ForMember(x => x.AccountName, opt => opt.MapFrom(x => x.Account.Name));
-        }
+        public IList<JournalEntryItemDto> JournalEntryItems { get; set; } = new List<JournalEntryItemDto>();
     }
 }

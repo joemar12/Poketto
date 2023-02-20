@@ -20,12 +20,10 @@ if (app.Environment.IsDevelopment())
     //IdentityModelEventSource.ShowPII = true;
     //app.UseMigrationsEndPoint();
 
-    using (var scope = app.Services.CreateScope())
-    {
-        var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
-        await initializer.InitializeAsync();
-        await initializer.SeedAsync();
-    }
+    using var scope = app.Services.CreateScope();
+    var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
+    await initializer.InitializeAsync();
+    await initializer.SeedAsync();
 }
 else
 {

@@ -33,8 +33,4 @@
     <ProjectReference Include="..\Poketto.Domain\Poketto.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Transactions\Commands\" />
-  </ItemGroup>
-
 </Project>

@@ -26,7 +26,7 @@ namespace Poketto.Infrastructure
                 services.AddDbContext<ApplicationDbContext>(options =>
                 {
                     options.UseSqlServer(
-                        configuration.GetConnectionString("DefaultConnectionString"),
+                        configuration.GetConnectionString("DefaultConnectionString") ?? string.Empty,
                         builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
                 });
             }

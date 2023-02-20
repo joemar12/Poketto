@@ -6,9 +6,8 @@ namespace Poketto.Application.Common.Interfaces
     public interface IApplicationDbContext
     {
         DbSet<Account> Accounts { get; }
-        DbSet<JournalEntry> Transactions { get; }
-        DbSet<TransactionJournal> TransactionJournals { get; }
-        DbSet<TransactionGroup> TransactionGroups { get; }
+        DbSet<JournalEntryItem> JournalEntryItems { get; }
+        DbSet<JournalEntry> JournalEntries { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
