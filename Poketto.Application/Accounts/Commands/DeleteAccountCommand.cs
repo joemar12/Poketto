@@ -34,7 +34,7 @@ namespace Poketto.Application.Accounts.Commands
             if (record != null)
             {
                 _context.Accounts.Remove(record);
-                await _context.SaveChangesAsync(new CancellationToken());
+                await _context.SaveChangesAsync(cancellationToken);
 
                 var result = _mapper.Map<AccountDto>(record);
                 return result;

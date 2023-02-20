@@ -2,7 +2,7 @@
 using Poketto.Api.Services;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Application.GraphQL.Accounts;
-using Poketto.Application.GraphQL.Transactions;
+using Poketto.Application.GraphQL.JournalEntries;
 using Poketto.Infrastructure.Persistence;
 
 namespace Poketto.Api
@@ -45,7 +45,7 @@ namespace Poketto.Api
                 //.RegisterDbContext<ApplicationDbContext>()
                 .AddQueryType(q => q.Name(OperationTypeNames.Query))
                 .AddTypeExtension<ChartOfAccountsQueryExtension>()
-                .AddTypeExtension<TransactionsQueryExtension>()
+                .AddTypeExtension<JournalEntriesQueryExtension>()
                 .AddProjections()
                 .AddFiltering()
                 .AddSorting()

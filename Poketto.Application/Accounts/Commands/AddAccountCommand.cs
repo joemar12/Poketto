@@ -37,7 +37,7 @@ namespace Poketto.Application.Accounts.Commands
             newRecord.OwnerUserId = ownerId ?? string.Empty;
 
             _context.Accounts.Add(newRecord);
-            await _context.SaveChangesAsync(new CancellationToken());
+            await _context.SaveChangesAsync(cancellationToken);
 
             var result = _mapper.Map<AccountDto>(newRecord);
             return result;

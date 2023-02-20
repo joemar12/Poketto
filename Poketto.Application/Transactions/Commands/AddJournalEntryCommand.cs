@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Poketto.Application.Common.Interfaces;
+using Poketto.Domain.Entities;
 
 namespace Poketto.Application.Transactions.Commands
 {
@@ -24,9 +25,17 @@ namespace Poketto.Application.Transactions.Commands
             _mapper = mapper;
             _currentUserService = currentUserService;
         }
-        public Task<JournalEntryDto> Handle(AddJournalEntryCommand request, CancellationToken cancellationToken)
+        public async Task<JournalEntryDto> Handle(AddJournalEntryCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var ownerId = _currentUserService.GetCurrentUser();
+            var newRecord = _mapper.Map<JournalEntry>(request);
+            newRecord.OwnerUserId = ownerId ?? string.Empty;
+
+            _context.JournalEntries.Add(newRecord);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            var result = _mapper.Map<JournalEntryDto>(newRecord);
+            return result;
         }
     }
 }

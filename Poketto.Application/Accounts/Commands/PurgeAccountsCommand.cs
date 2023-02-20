@@ -41,7 +41,7 @@ namespace Poketto.Application.Accounts.Commands
                 }
             }
 
-            await _context.SaveChangesAsync(new CancellationToken());
+            await _context.SaveChangesAsync(cancellationToken);
 
             var result = _mapper.Map<IEnumerable<AccountDto>>(userAccounts.ToList())
                 .Where(x => x.ParentAccountId == Guid.Empty)
