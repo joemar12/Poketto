@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using Poketto.Application.Common;
-using Poketto.Application.Common.Mapping;
-using Poketto.Domain.Entities;
+﻿using Poketto.Application.Common;
 using Poketto.Domain.Enums;
 
 namespace Poketto.Application.Accounts

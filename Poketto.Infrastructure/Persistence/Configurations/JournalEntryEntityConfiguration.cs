@@ -20,6 +20,9 @@ namespace Poketto.Infrastructure.Persistence.Configurations
             builder.Property(x => x.OwnerUserId)
                 .HasMaxLength(100)
                 .IsRequired();
+
+            builder.HasIndex(x => new { x.RefCode, x.OwnerUserId })
+                .IsUnique();
         }
     }
 }

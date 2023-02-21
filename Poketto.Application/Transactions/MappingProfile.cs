@@ -8,11 +8,11 @@ namespace Poketto.Application.Transactions
     {
         public MappingProfile()
         {
-            CreateMap<JournalEntry, JournalEntryDto>().ReverseMap();
             CreateMap<JournalEntryItem, JournalEntryItemDto>()
-                .ForMember(x => x.AccountName, opt => opt.MapFrom(x => x.Account.Name));
+                .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account.Name));
             CreateMap<JournalEntryItemDto, JournalEntryItem>();
             CreateMap<AddJournalEntryCommand, JournalEntry>();
+            CreateMap<JournalEntry, JournalEntryDto>();
         }
     }
 }

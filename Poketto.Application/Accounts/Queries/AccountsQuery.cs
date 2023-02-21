@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Poketto.Application.Common.Interfaces;
@@ -27,13 +28,10 @@ namespace Poketto.Application.Accounts.Queries
             var ownerId = _currentUserService.GetCurrentUser();
             var accounts = _context.Accounts
                 .AsNoTrackingWithIdentityResolution()
-                .Where(x => x.OwnerUserId == ownerId);
+                .Where(x => x.OwnerUserId == ownerId)
+                .ProjectTo<AccountDto>(_mapper.ConfigurationProvider);
 
-            var result = _mapper.Map<IEnumerable<AccountDto>>(accounts.ToList())
-                .Where(x => x.ParentAccountId == Guid.Empty)
-                .AsQueryable();
-
-            return Task.FromResult(result);
+            return Task.FromResult(accounts);
         }
     }
 }
