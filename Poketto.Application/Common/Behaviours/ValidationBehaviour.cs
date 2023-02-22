@@ -16,8 +16,7 @@ namespace Poketto.Application.Common.Behaviours
         }
 
         public async Task<TResponse> Handle(TRequest request,
-                                            CancellationToken cancellationToken,
-                                            RequestHandlerDelegate<TResponse> next)
+                                            RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             if (_validators.Any())
             {

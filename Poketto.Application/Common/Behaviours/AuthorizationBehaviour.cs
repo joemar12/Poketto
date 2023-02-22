@@ -21,9 +21,7 @@ namespace Poketto.Application.Common.Behaviours
             _config = config;
         }
 
-        public async Task<TResponse> Handle(TRequest request,
-                                            CancellationToken cancellationToken,
-                                            RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var authorizeAttributes = request.GetType().GetCustomAttributes<AuthorizeAttribute>();
 

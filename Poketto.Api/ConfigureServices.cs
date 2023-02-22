@@ -40,9 +40,7 @@ namespace Poketto.Api
         {
             services.AddGraphQLServer()
                 .AddAuthorization()
-                .AddRequiredScopeAuthorization()
                 .AddDefaultTransactionScopeHandler()
-                //.RegisterDbContext<ApplicationDbContext>()
                 .AddQueryType(q => q.Name(OperationTypeNames.Query))
                 .AddTypeExtension<ChartOfAccountsQueryExtension>()
                 .AddTypeExtension<JournalEntriesQueryExtension>()
