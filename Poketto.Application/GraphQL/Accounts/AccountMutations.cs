@@ -9,36 +9,34 @@ namespace Poketto.Application.GraphQL.Accounts
     public class AccountMutations
     {
         private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
 
-        public AccountMutations(IMapper mapper, IMediator mediator)
+        public AccountMutations(IMapper mapper)
         {
             _mapper = mapper;
-            _mediator = mediator;
         }
 
         [Error<AuthorizationError>]
         [Error<InternalServerError>]
-        public async Task<AccountListPayload> InitializeFromTemplate([Service] IMediator _mediator)
+        public async Task<AccountListPayload> InitializeFromTemplate([Service] ISender mediator)
         {
-            var result = await _mediator.Send(new InitializeAccountsFromTemplateCommand());
+            var result = await mediator.Send(new InitializeAccountsFromTemplateCommand());
             return new AccountListPayload() { Accounts = result };
         }
 
         [Error<AuthorizationError>]
         [Error<InternalServerError>]
-        public async Task<AccountListPayload> PurgeAccounts([Service] IMediator _mediator)
+        public async Task<AccountListPayload> PurgeAccounts([Service] ISender mediator)
         {
-            var result = await _mediator.Send(new PurgeAccountsCommand());
+            var result = await mediator.Send(new PurgeAccountsCommand());
             return new AccountListPayload() { Accounts = result };
         }
 
         [Error<AuthorizationError>]
         [Error<InternalServerError>]
-        public async Task<AccountPayload> AddAccount(AccountInput input)
+        public async Task<AccountPayload> AddAccount(AccountInput input, [Service] ISender mediator)
         {
             var command = _mapper.Map<AddAccountCommand>(input);
-            var result = await _mediator.Send(command);
+            var result = await mediator.Send(command);
 
             return new AccountPayload() { Account = result };
         }
@@ -46,20 +44,20 @@ namespace Poketto.Application.GraphQL.Accounts
         [Error<AuthorizationError>]
         [Error<NotFoundError>]
         [Error<InternalServerError>]
-        public async Task<AccountPayload> UpdateAccount(AccountInput input)
+        public async Task<AccountPayload> UpdateAccount(AccountInput input, [Service] ISender mediator)
         {
             var command = _mapper.Map<AddAccountCommand>(input);
-            var result = await _mediator.Send(command);
+            var result = await mediator.Send(command);
             return new AccountPayload() { Account = result };
         }
 
         [Error<AuthorizationError>]
         [Error<NotFoundError>]
         [Error<InternalServerError>]
-        public async Task<AccountPayload> DeleteAccount(Guid input)
+        public async Task<AccountPayload> DeleteAccount(Guid input, [Service] ISender mediator)
         {
             var command = new DeleteAccountCommand() { Id = input };
-            var result = await _mediator.Send(command);
+            var result = await mediator.Send(command);
 
             return new AccountPayload() { Account = result };
         }

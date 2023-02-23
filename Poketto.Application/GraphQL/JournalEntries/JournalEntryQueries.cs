@@ -10,10 +10,9 @@ namespace Poketto.Application.GraphQL.JournalEntries
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public async Task<IQueryable<JournalEntryDto>> GetJournalEntries([Service] IMediator mediator)
+        public async Task<IQueryable<JournalEntryDto>> GetJournalEntries([Service] ISender mediator)
         {
             var result = await mediator.Send(new TransactionJournalsQuery());
-
             return result;
         }
     }

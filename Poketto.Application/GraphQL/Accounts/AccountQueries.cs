@@ -8,17 +8,17 @@ namespace Poketto.Application.GraphQL.Accounts
     public class AccountQueries
     {
         [UseFiltering]
-        public async Task<IQueryable<AccountDto>> GetTemplateAccounts([Service] IMediator _mediator)
+        public async Task<IQueryable<AccountDto>> GetTemplateAccounts([Service] ISender mediator)
         {
-            var result = await _mediator.Send(new TemplateAccountsQuery());
+            var result = await mediator.Send(new TemplateAccountsQuery());
 
             return result;
         }
 
         [UseFiltering]
-        public async Task<IQueryable<AccountDto>> GetUserAccounts([Service] IMediator _mediator)
+        public async Task<IQueryable<AccountDto>> GetUserAccounts([Service] ISender mediator)
         {
-            var result = await _mediator.Send(new AccountsQuery());
+            var result = await mediator.Send(new AccountsQuery());
 
             return result;
         }
