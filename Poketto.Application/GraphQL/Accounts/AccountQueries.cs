@@ -5,7 +5,7 @@ using Poketto.Application.Accounts.Queries;
 namespace Poketto.Application.GraphQL.Accounts
 {
     [ExtendObjectType(OperationTypeNames.Query)]
-    public class ChartOfAccountsQueryExtension
+    public class AccountQueries
     {
         [UseFiltering]
         public async Task<IQueryable<AccountDto>> GetTemplateAccounts([Service] IMediator _mediator)

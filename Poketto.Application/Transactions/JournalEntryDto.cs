@@ -2,7 +2,7 @@
 
 namespace Poketto.Application.Transactions
 {
-    public record JournalEntryDto : BaseAuditableEntityDto
+    public record JournalEntryDto : BaseAuditableDto
     {
         public string RefCode { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

@@ -1,17 +1,17 @@
-﻿using Poketto.Application.Common;
+﻿using Poketto.Application.Common.Exceptions;
 
 namespace Poketto.Application.GraphQL.Errors
 {
-    public class NotFoundError : BaseError
+    public class NotFoundError : BaseResultError
     {
-        public NotFoundError()
-        {
-            Message = "Record not found";
-        }
-
         public NotFoundError(string message)
         {
             Message = message;
+            Code = Common.ErrorCodes.NotFound;
+        }
+        public static NotFoundError? CreateErrorFrom(NotFoundException ex)
+        {
+            return new NotFoundError(ex.Message);
         }
     }
 }

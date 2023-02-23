@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
+using Poketto.Application.Common.Exceptions;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Application.Common.Security;
 using System.Reflection;
@@ -30,7 +31,7 @@ namespace Poketto.Application.Common.Behaviours
                 // Must be authenticated user
                 if (string.IsNullOrEmpty(_currentUserService.GetCurrentUser()))
                 {
-                    throw new UnauthorizedAccessException();
+                    throw new AuthorizationException("User not authenticated", ErrorCodes.Authentication.NotAuthenticated);
                 }
                 // if scopes are required
                 var requiredScopes = authorizeAttributes
@@ -62,7 +63,7 @@ namespace Poketto.Application.Common.Behaviours
                         .Any();
                     if (!hasRequiredScopes)
                     {
-                        throw new UnauthorizedAccessException("Required scope(s) not found");
+                        throw new AuthorizationException("Required scope(s) not found", ErrorCodes.Authentication.RequiredScopesNotFound);
                     }
                 }
             }

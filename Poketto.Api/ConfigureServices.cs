@@ -2,6 +2,7 @@
 using Poketto.Api.Services;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Application.GraphQL.Accounts;
+using Poketto.Application.GraphQL.Errors;
 using Poketto.Application.GraphQL.JournalEntries;
 using Poketto.Infrastructure.Persistence;
 
@@ -40,15 +41,17 @@ namespace Poketto.Api
         {
             services.AddGraphQLServer()
                 .AddAuthorization()
-                .AddDefaultTransactionScopeHandler()
-                .AddQueryType(q => q.Name(OperationTypeNames.Query))
-                .AddTypeExtension<ChartOfAccountsQueryExtension>()
-                .AddTypeExtension<JournalEntriesQueryExtension>()
-                .AddProjections()
                 .AddFiltering()
                 .AddSorting()
-                .AddMutationType(m => m.Name(OperationTypeNames.Mutation))
-                .AddTypeExtension<ChartOfAccountsMutationExtension>();
+                .AddProjections()
+                .AddDefaultTransactionScopeHandler()
+                .AddMutationConventions(true)
+                .AddErrorInterfaceType<IResultError>()
+                .AddQueryType(q => q.Name(OperationTypeNames.Query))
+                    .AddTypeExtension<AccountQueries>()
+                    .AddTypeExtension<JournalEntryQueries>()
+                .AddMutationType(q => q.Name(OperationTypeNames.Mutation))
+                    .AddTypeExtension<AccountMutations>();
 
             return services;
         }

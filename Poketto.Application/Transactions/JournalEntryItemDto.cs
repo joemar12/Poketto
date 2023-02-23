@@ -3,7 +3,7 @@ using Poketto.Domain.Enums;
 
 namespace Poketto.Application.Transactions
 {
-    public record JournalEntryItemDto : BaseAuditableEntityDto
+    public record JournalEntryItemDto : BaseAuditableDto
     {
         public string Description { get; set; } = string.Empty;
         public double Amount { get; set; }

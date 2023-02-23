@@ -1,17 +1,15 @@
-﻿using Poketto.Application.Common;
-
-namespace Poketto.Application.GraphQL.Errors
+﻿namespace Poketto.Application.GraphQL.Errors
 {
-    public class InternalServerError : BaseError
+    public class InternalServerError : BaseResultError
     {
-        public InternalServerError()
-        {
-            Message = "Internal server error";
-        }
-
         public InternalServerError(string message)
         {
             Message = message;
+            Code = Common.ErrorCodes.InternalServerError;
+        }
+        public static InternalServerError? CreateErrorFrom(Exception ex)
+        {
+            return new InternalServerError(ex.Message);
         }
     }
 }

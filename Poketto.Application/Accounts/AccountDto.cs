@@ -3,7 +3,7 @@ using Poketto.Domain.Enums;
 
 namespace Poketto.Application.Accounts
 {
-    public record AccountDto : BaseAuditableEntityDto
+    public record AccountDto : BaseAuditableDto
     {
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

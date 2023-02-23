@@ -41,7 +41,7 @@ namespace Poketto.Application.Accounts.Commands
             }
             else
             {
-                throw new DeleteRecordException("Account not found");
+                throw new NotFoundException("Account to delete was not found");
             }
         }
     }

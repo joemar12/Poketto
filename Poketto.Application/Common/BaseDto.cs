@@ -1,6 +1,6 @@
 ﻿namespace Poketto.Application.Common
 {
-    public abstract record BaseEntityDto
+    public abstract record BaseDto
     {
         public Guid Id { get; set; }
     }

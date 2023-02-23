@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using Poketto.Application.Common.Exceptions;
 
 namespace Poketto.Application.Common.Behaviours
 {
@@ -23,7 +24,6 @@ namespace Poketto.Application.Common.Behaviours
                 var requestName = typeof(TRequest).Name;
 
                 _logger.LogError(ex, "Poketto Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
-
                 throw;
             }
         }
