@@ -51,7 +51,8 @@ namespace Poketto.Api
                     .AddTypeExtension<AccountQueries>()
                     .AddTypeExtension<JournalEntryQueries>()
                 .AddMutationType(q => q.Name(OperationTypeNames.Mutation))
-                    .AddTypeExtension<AccountMutations>();
+                    .AddTypeExtension<AccountMutations>()
+                    .AddTypeExtension<JournalEntryMutations>();
 
             return services;
         }
