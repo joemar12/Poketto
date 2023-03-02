@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using Poketto.Application.Common;
-using Poketto.Application.Common.Mapping;
-using Poketto.Domain.Entities;
+﻿using Poketto.Application.Common;
 using Poketto.Domain.Enums;
 
 namespace Poketto.Application.Accounts
 {
-    public record AccountDto : BaseAuditableEntityDto, IMappableFrom<Account>
+    public record AccountDto : BaseAuditableDto
     {
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
@@ -16,10 +13,5 @@ namespace Poketto.Application.Accounts
         public bool IsPlaceholder { get; set; }
 
         public IEnumerable<AccountDto>? ChildAccounts { get; set; }
-
-        public void CreateMap(Profile profile)
-        {
-            profile.CreateMap<Account, AccountDto>();
-        }
     }
 }

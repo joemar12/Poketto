@@ -8,6 +8,7 @@ namespace Poketto.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Account> builder)
         {
+            builder.ToTable("Accounts");
             builder.Property(x => x.Name)
                 .HasMaxLength(200)
                 .IsRequired();

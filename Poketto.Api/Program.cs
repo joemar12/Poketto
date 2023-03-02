@@ -20,12 +20,10 @@ if (app.Environment.IsDevelopment())
     //IdentityModelEventSource.ShowPII = true;
     //app.UseMigrationsEndPoint();
 
-    using (var scope = app.Services.CreateScope())
-    {
-        var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
-        await initializer.InitializeAsync();
-        await initializer.SeedAsync();
-    }
+    using var scope = app.Services.CreateScope();
+    var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
+    await initializer.InitializeAsync();
+    await initializer.SeedAsync();
 }
 else
 {
@@ -39,11 +37,11 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseRouting();
-app.UseCors();
+app.UseCors("poketto-client");
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseEndpoints(endpoints => endpoints.MapGraphQL());
+app.MapGraphQL();
 
 app.Run();

@@ -11,7 +11,7 @@ namespace Poketto.Infrastructure.Persistence.Interceptors
         private readonly IDateTime _dateTime;
 
         public AuditableEntitySaveChangesInterceptor(
-            ICurrentUserService currentUserService, 
+            ICurrentUserService currentUserService,
             IDateTime dateTime)
         {
             _currentUserService = currentUserService;

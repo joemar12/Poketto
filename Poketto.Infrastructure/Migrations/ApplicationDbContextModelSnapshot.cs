@@ -17,10 +17,10 @@ namespace Poketto.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Poketto.Domain.Entities.Account", b =>
                 {
@@ -67,10 +67,57 @@ namespace Poketto.Infrastructure.Migrations
 
                     b.HasIndex("ParentAccountId");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Accounts", (string)null);
                 });
 
             modelBuilder.Entity("Poketto.Domain.Entities.JournalEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("JournalEntryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerUserId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RefCode")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RefCode", "OwnerUserId")
+                        .IsUnique();
+
+                    b.ToTable("JournalEntries", (string)null);
+                });
+
+            modelBuilder.Entity("Poketto.Domain.Entities.JournalEntryItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,96 +135,30 @@ namespace Poketto.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("TransactionJournalId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("TransactionJournalId");
-
-                    b.ToTable("JournalEntries", (string)null);
-                });
-
-            modelBuilder.Entity("Poketto.Domain.Entities.TransactionGroup", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OwnerUserId")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TransactionGroups");
-                });
-
-            modelBuilder.Entity("Poketto.Domain.Entities.TransactionJournal", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<Guid>("JournalEntryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OwnerUserId")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<Guid>("TransactionGroupId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TransactionGroupId");
+                    b.HasIndex("AccountId");
 
-                    b.ToTable("TransactionJournals");
+                    b.HasIndex("JournalEntryId");
+
+                    b.ToTable("JournalEntryItems", (string)null);
                 });
 
             modelBuilder.Entity("Poketto.Domain.Entities.Account", b =>
@@ -190,51 +171,35 @@ namespace Poketto.Infrastructure.Migrations
                     b.Navigation("ParentAccount");
                 });
 
-            modelBuilder.Entity("Poketto.Domain.Entities.JournalEntry", b =>
+            modelBuilder.Entity("Poketto.Domain.Entities.JournalEntryItem", b =>
                 {
                     b.HasOne("Poketto.Domain.Entities.Account", "Account")
-                        .WithMany("JournalEntries")
+                        .WithMany("JournalEntryItems")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Poketto.Domain.Entities.TransactionJournal", "TransactionJournal")
-                        .WithMany("JournalEntries")
-                        .HasForeignKey("TransactionJournalId")
+                    b.HasOne("Poketto.Domain.Entities.JournalEntry", "JournalEntry")
+                        .WithMany("JournalEntryItems")
+                        .HasForeignKey("JournalEntryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Account");
 
-                    b.Navigation("TransactionJournal");
-                });
-
-            modelBuilder.Entity("Poketto.Domain.Entities.TransactionJournal", b =>
-                {
-                    b.HasOne("Poketto.Domain.Entities.TransactionGroup", "TransactionGroup")
-                        .WithMany("TransactionJournals")
-                        .HasForeignKey("TransactionGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TransactionGroup");
+                    b.Navigation("JournalEntry");
                 });
 
             modelBuilder.Entity("Poketto.Domain.Entities.Account", b =>
                 {
                     b.Navigation("ChildAccounts");
 
-                    b.Navigation("JournalEntries");
+                    b.Navigation("JournalEntryItems");
                 });
 
-            modelBuilder.Entity("Poketto.Domain.Entities.TransactionGroup", b =>
+            modelBuilder.Entity("Poketto.Domain.Entities.JournalEntry", b =>
                 {
-                    b.Navigation("TransactionJournals");
-                });
-
-            modelBuilder.Entity("Poketto.Domain.Entities.TransactionJournal", b =>
-                {
-                    b.Navigation("JournalEntries");
+                    b.Navigation("JournalEntryItems");
                 });
 #pragma warning restore 612, 618
         }

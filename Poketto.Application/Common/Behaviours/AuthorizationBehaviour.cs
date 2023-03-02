@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
+using Poketto.Application.Common.Exceptions;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Application.Common.Security;
 using System.Reflection;
@@ -21,9 +22,7 @@ namespace Poketto.Application.Common.Behaviours
             _config = config;
         }
 
-        public async Task<TResponse> Handle(TRequest request,
-                                            CancellationToken cancellationToken,
-                                            RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var authorizeAttributes = request.GetType().GetCustomAttributes<AuthorizeAttribute>();
 
@@ -32,7 +31,7 @@ namespace Poketto.Application.Common.Behaviours
                 // Must be authenticated user
                 if (string.IsNullOrEmpty(_currentUserService.GetCurrentUser()))
                 {
-                    throw new UnauthorizedAccessException();
+                    throw new AuthorizationException("User not authenticated", ErrorCodes.Authentication.NotAuthenticated);
                 }
                 // if scopes are required
                 var requiredScopes = authorizeAttributes
@@ -40,7 +39,13 @@ namespace Poketto.Application.Common.Behaviours
                     {
                         if (x.Scopes is null || x.Scopes.Length < 1)
                         {
-                            return _config.GetValue<string>(x.RequiredScopesConfigurationKey).Split(' ').ToList();
+                            var scopesFromConfig = new List<string>();
+                            var config = _config.GetValue<string>(x.RequiredScopesConfigurationKey ?? string.Empty);
+                            if (config is not null)
+                            {
+                                scopesFromConfig = config.Split(' ').ToList();
+                            }
+                            return scopesFromConfig;
                         }
                         else
                         {
@@ -58,7 +63,7 @@ namespace Poketto.Application.Common.Behaviours
                         .Any();
                     if (!hasRequiredScopes)
                     {
-                        throw new UnauthorizedAccessException("Required scope(s) not found");
+                        throw new AuthorizationException("Required scope(s) not found", ErrorCodes.Authentication.RequiredScopesNotFound);
                     }
                 }
             }

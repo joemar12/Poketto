@@ -364,3 +364,4 @@ FodyWeavers.xsd
 Poketto.Api/secrets.json
 Poketto.Api/secrets.*.json
 /.vscode
+/Poketto.Api/secretsb2c.json
