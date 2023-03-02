@@ -2,6 +2,7 @@
 using MediatR;
 using Poketto.Application.Common.Interfaces;
 using Poketto.Domain.Entities;
+using Poketto.Domain.Enums;
 
 namespace Poketto.Application.Transactions.Commands
 {
@@ -10,6 +11,7 @@ namespace Poketto.Application.Transactions.Commands
         public string RefCode { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public DateTime JournalEntryDate { get; set; }
+        public JournalEntryStatus Status { get; set; }
         public IList<JournalEntryItemDto> JournalEntryItems { get; set; } = new List<JournalEntryItemDto>();
     }
 
