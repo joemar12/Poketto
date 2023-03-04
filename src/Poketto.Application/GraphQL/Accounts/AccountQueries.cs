@@ -2,25 +2,24 @@
 using Poketto.Application.Accounts;
 using Poketto.Application.Accounts.Queries;
 
-namespace Poketto.Application.GraphQL.Accounts
+namespace Poketto.Application.GraphQL.Accounts;
+
+[ExtendObjectType(OperationTypeNames.Query)]
+public class AccountQueries
 {
-    [ExtendObjectType(OperationTypeNames.Query)]
-    public class AccountQueries
+    [UseFiltering]
+    public async Task<IQueryable<AccountDto>> GetTemplateAccounts([Service] ISender mediator)
     {
-        [UseFiltering]
-        public async Task<IQueryable<AccountDto>> GetTemplateAccounts([Service] ISender mediator)
-        {
-            var result = await mediator.Send(new TemplateAccountsQuery());
+        var result = await mediator.Send(new TemplateAccountsQuery());
 
-            return result;
-        }
+        return result;
+    }
 
-        [UseFiltering]
-        public async Task<IQueryable<AccountDto>> GetUserAccounts([Service] ISender mediator)
-        {
-            var result = await mediator.Send(new AccountsQuery());
+    [UseFiltering]
+    public async Task<IQueryable<AccountDto>> GetUserAccounts([Service] ISender mediator)
+    {
+        var result = await mediator.Send(new AccountsQuery());
 
-            return result;
-        }
+        return result;
     }
 }

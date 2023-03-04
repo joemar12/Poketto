@@ -1,8 +1,7 @@
-﻿namespace Poketto.Domain.Enums
+﻿namespace Poketto.Domain.Enums;
+
+public enum JournalEntryStatus
 {
-    public enum JournalEntryStatus
-    {
-        Draft,
-        Posted
-    }
+    Draft,
+    Posted
 }

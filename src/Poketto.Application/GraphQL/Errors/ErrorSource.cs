@@ -1,19 +1,18 @@
-﻿namespace Poketto.Application.GraphQL.Errors
+﻿namespace Poketto.Application.GraphQL.Errors;
+
+public class ErrorSource
 {
-    public class ErrorSource
+    public string? Property { get; set; }
+    public string? PropertyNormalised
     {
-        public string? Property { get; set; }
-        public string? PropertyNormalised
+        get
         {
-            get
+            if (Property == null)
             {
-                if (Property == null)
-                {
-                    return null;
-                }
-                return Property.ToLowerInvariant();
+                return null;
             }
+            return Property.ToLowerInvariant();
         }
-        public string? Message { get; set; }
     }
+    public string? Message { get; set; }
 }

@@ -1,11 +1,10 @@
-﻿namespace Poketto.Domain.Enums
+﻿namespace Poketto.Domain.Enums;
+
+public enum AccountType
 {
-    public enum AccountType
-    {
-        Asset,
-        Liability,
-        Equity,
-        Revenue,
-        Expense
-    }
+    Asset,
+    Liability,
+    Equity,
+    Revenue,
+    Expense
 }

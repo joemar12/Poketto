@@ -1,14 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace Poketto.Infrastructure.Persistence.Interceptors
+namespace Poketto.Infrastructure.Persistence.Interceptors;
+
+public static class InterceptorExtensions
 {
-    public static class InterceptorExtensions
-    {
-        public static bool HasChangedOwnedEntities(this EntityEntry entry) =>
-            entry.References.Any(x =>
-                x.TargetEntry != null &&
-                x.TargetEntry.Metadata.IsOwned() &&
-                (x.TargetEntry.State == EntityState.Added || x.TargetEntry.State == EntityState.Modified));
-    }
+    public static bool HasChangedOwnedEntities(this EntityEntry entry) =>
+        entry.References.Any(x =>
+            x.TargetEntry != null &&
+            x.TargetEntry.Metadata.IsOwned() &&
+            (x.TargetEntry.State == EntityState.Added || x.TargetEntry.State == EntityState.Modified));
 }

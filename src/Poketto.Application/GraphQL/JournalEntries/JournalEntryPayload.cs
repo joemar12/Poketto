@@ -1,9 +1,8 @@
 ﻿using Poketto.Application.Transactions;
 
-namespace Poketto.Application.GraphQL.JournalEntries
+namespace Poketto.Application.GraphQL.JournalEntries;
+
+public class JournalEntryPayload
 {
-    public class JournalEntryPayload
-    {
-        public JournalEntryDto? JournalEntry { get; set; }
-    }
+    public JournalEntryDto? JournalEntry { get; set; }
 }

@@ -1,8 +1,7 @@
-﻿namespace Poketto.Domain.Enums
+﻿namespace Poketto.Domain.Enums;
+
+public enum TransactionType
 {
-    public enum TransactionType
-    {
-        Debit,
-        Credit
-    }
+    Debit,
+    Credit
 }

@@ -1,9 +1,8 @@
-﻿namespace Poketto.Application.Common.Interfaces
-{
-    public interface ICurrentUserService
-    {
-        string? GetCurrentUser();
+﻿namespace Poketto.Application.Common.Interfaces;
 
-        IList<string>? GetCurrentUserScopes();
-    }
+public interface ICurrentUserService
+{
+    string? GetCurrentUser();
+
+    IList<string>? GetCurrentUserScopes();
 }

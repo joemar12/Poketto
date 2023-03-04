@@ -2,31 +2,30 @@
 using Poketto.Application.Common.Interfaces;
 using System.Security.Claims;
 
-namespace Poketto.Api.Services
+namespace Poketto.Api.Services;
+
+public class CurrentUserService : ICurrentUserService
 {
-    public class CurrentUserService : ICurrentUserService
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public CurrentUserService(IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
-        public CurrentUserService(IHttpContextAccessor httpContextAccessor)
+    public string? GetCurrentUser() => _httpContextAccessor.HttpContext?.User?.FindFirstValue("emails");
+
+    public IList<string>? GetCurrentUserScopes()
+    {
+        var result = new List<string>();
+        var userClaimsPrincipal = _httpContextAccessor.HttpContext?.User;
+        if (userClaimsPrincipal is not null)
         {
-            _httpContextAccessor = httpContextAccessor;
+            var scopeClaims = userClaimsPrincipal.FindAll(ClaimConstants.Scope)
+                .Union(userClaimsPrincipal.FindAll(ClaimConstants.Scp))
+                .ToList();
+            result.AddRange(scopeClaims.SelectMany(x => x.Value.Split(' ')).ToList());
         }
-
-        public string? GetCurrentUser() => _httpContextAccessor.HttpContext?.User?.FindFirstValue("emails");
-
-        public IList<string>? GetCurrentUserScopes()
-        {
-            var result = new List<string>();
-            var userClaimsPrincipal = _httpContextAccessor.HttpContext?.User;
-            if (userClaimsPrincipal is not null)
-            {
-                var scopeClaims = userClaimsPrincipal.FindAll(ClaimConstants.Scope)
-                    .Union(userClaimsPrincipal.FindAll(ClaimConstants.Scp))
-                    .ToList();
-                result.AddRange(scopeClaims.SelectMany(x => x.Value.Split(' ')).ToList());
-            }
-            return result;
-        }
+        return result;
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace Poketto.Domain.Common
+﻿namespace Poketto.Domain.Common;
+
+public abstract class BaseEntity
 {
-    public abstract class BaseEntity
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

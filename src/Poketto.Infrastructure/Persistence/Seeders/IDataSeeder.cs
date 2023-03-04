@@ -1,7 +1,6 @@
-﻿namespace Poketto.Infrastructure.Persistence.Seeders
+﻿namespace Poketto.Infrastructure.Persistence.Seeders;
+
+public interface IDataSeeder
 {
-    public interface IDataSeeder
-    {
-        Task SeedAsync();
-    }
+    Task SeedAsync();
 }

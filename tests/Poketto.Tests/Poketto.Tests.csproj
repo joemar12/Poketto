@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <Folder Include="FunctionalTests\" />
-    <Folder Include="UnitTests\Application\Accounts\" />
-    <Folder Include="UnitTests\Application\" />
     <Folder Include="UnitTests\Application\Transactions\" />
   </ItemGroup>
 
@@ -17,6 +15,8 @@
     <PackageReference Include="AutoFixture" Version="4.18.0" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.18.0" />
     <PackageReference Include="FluentAssertions" Version="6.10.0" />
+    <PackageReference Include="FluentValidation" Version="11.5.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.3" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.5.0" />
@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Poketto.Application\Poketto.Application.csproj" />
+    <ProjectReference Include="..\..\src\Poketto.Infrastructure\Poketto.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

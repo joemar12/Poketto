@@ -1,9 +1,8 @@
-﻿namespace Poketto.Application.GraphQL.Errors
+﻿namespace Poketto.Application.GraphQL.Errors;
+
+[InterfaceType("ResultError")]
+public interface IResultError
 {
-    [InterfaceType("ResultError")]
-    public interface IResultError
-    {
-        string Code { get; }
-        string Message { get; }
-    }
+    string Code { get; }
+    string Message { get; }
 }

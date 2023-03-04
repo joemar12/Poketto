@@ -3,76 +3,75 @@ using Microsoft.Extensions.Logging;
 using Poketto.Infrastructure.Persistence.Seeders;
 using System.Reflection;
 
-namespace Poketto.Infrastructure.Persistence
+namespace Poketto.Infrastructure.Persistence;
+
+public class ApplicationDbContextInitializer
 {
-    public class ApplicationDbContextInitializer
+    private readonly ILogger<ApplicationDbContextInitializer> _logger;
+    private readonly ApplicationDbContext _context;
+
+    public ApplicationDbContextInitializer(ILogger<ApplicationDbContextInitializer> logger, ApplicationDbContext context)
     {
-        private readonly ILogger<ApplicationDbContextInitializer> _logger;
-        private readonly ApplicationDbContext _context;
+        _logger = logger;
+        _context = context;
+    }
 
-        public ApplicationDbContextInitializer(ILogger<ApplicationDbContextInitializer> logger, ApplicationDbContext context)
+    public async Task InitializeAsync()
+    {
+        try
         {
-            _logger = logger;
-            _context = context;
-        }
-
-        public async Task InitializeAsync()
-        {
-            try
+            if (_context.Database.IsSqlServer())
             {
-                if (_context.Database.IsSqlServer())
-                {
-                    await _context.Database.MigrateAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while initialising the database.");
-                throw;
+                await _context.Database.MigrateAsync();
             }
         }
-
-        public async Task SeedAsync()
+        catch (Exception ex)
         {
-            try
+            _logger.LogError(ex, "An error occurred while initialising the database.");
+            throw;
+        }
+    }
+
+    public async Task SeedAsync()
+    {
+        try
+        {
+            await TrySeedAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while seeding the database.");
+            throw;
+        }
+    }
+
+    private async Task TrySeedAsync()
+    {
+        var seeders = GetSeeders();
+        foreach (var seeder in seeders)
+        {
+            await seeder.SeedAsync();
+        }
+    }
+
+    private IEnumerable<IDataSeeder> GetSeeders()
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        var types = assembly.GetTypes();
+        var seederTypes = from type in types
+                          where type != null
+                          && type.GetInterface(typeof(IDataSeeder).Name) == typeof(IDataSeeder)
+                          && !type.IsAbstract
+                          select type;
+        var seederInstances = new List<IDataSeeder>();
+        foreach (var seederType in seederTypes)
+        {
+            var instance = Activator.CreateInstance(seederType, _context) as IDataSeeder;
+            if (instance != null)
             {
-                await TrySeedAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while seeding the database.");
-                throw;
+                seederInstances.Add(instance);
             }
         }
-
-        private async Task TrySeedAsync()
-        {
-            var seeders = GetSeeders();
-            foreach (var seeder in seeders)
-            {
-                await seeder.SeedAsync();
-            }
-        }
-
-        private IEnumerable<IDataSeeder> GetSeeders()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var types = assembly.GetTypes();
-            var seederTypes = from type in types
-                              where type != null
-                              && type.GetInterface(typeof(IDataSeeder).Name) == typeof(IDataSeeder)
-                              && !type.IsAbstract
-                              select type;
-            var seederInstances = new List<IDataSeeder>();
-            foreach (var seederType in seederTypes)
-            {
-                var instance = Activator.CreateInstance(seederType, _context) as IDataSeeder;
-                if (instance != null)
-                {
-                    seederInstances.Add(instance);
-                }
-            }
-            return seederInstances;
-        }
+        return seederInstances;
     }
 }
