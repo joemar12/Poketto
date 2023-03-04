@@ -24,6 +24,26 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+      
+      - name: Get connection string from Key Vault
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            connection-string=$(az keyvault secret show --name "DefaultConnectionString" --vault-name "poketto-app-secrets" --query "value")
+            echo "connection-string=$connection-string" >> $GITHUB_ENV
+
+      - name: Update database
+        run: |
+          dotnet tool install --global dotnet-ef
+          dotnet tool restore
+          dotnet ef database update -c ApplicationDbContext -p src/Poketto.Infrastructure -s src/Poketto.Api --connection ${{ ::add-mask::env.connection-string }}
+        env:
+          ASPNETCORE_ENVIRONMENT: Production
+
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
