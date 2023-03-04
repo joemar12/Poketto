@@ -33,14 +33,14 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            connection-string=$(az keyvault secret show --name "DefaultConnectionString" --vault-name "poketto-app-secrets" --query "value")
+            connection-string=::add-mask::$(az keyvault secret show --name "DefaultConnectionString" --vault-name "poketto-app-secrets" --query "value")
             echo "connection-string=$connection-string" >> $GITHUB_ENV
 
       - name: Update database
         run: |
           dotnet tool install --global dotnet-ef
           dotnet tool restore
-          dotnet ef database update -c ApplicationDbContext -p src/Poketto.Infrastructure -s src/Poketto.Api --connection ${{ ::add-mask::env.connection-string }}
+          dotnet ef database update -c ApplicationDbContext -p src/Poketto.Infrastructure -s src/Poketto.Api --connection ${{ env.connection-string }}
         env:
           ASPNETCORE_ENVIRONMENT: Production
 
