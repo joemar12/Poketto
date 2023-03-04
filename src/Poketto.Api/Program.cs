@@ -19,15 +19,17 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     //IdentityModelEventSource.ShowPII = true;
     //app.UseMigrationsEndPoint();
-
-    using var scope = app.Services.CreateScope();
-    var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
-    await initializer.InitializeAsync();
-    await initializer.SeedAsync();
 }
 else
 {
     app.UseHsts();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
+    await initializer.InitializeAsync();
+    await initializer.SeedAsync();
 }
 
 app.UseHealthChecks("/health");
