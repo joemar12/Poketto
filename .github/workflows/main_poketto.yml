@@ -33,8 +33,8 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            connection-string=$(az keyvault secret show --name "DefaultConnectionString" --vault-name "poketto-app-secrets" --query "value")
-            echo "connection-string=::add-mask::$connection-string" >> $GITHUB_ENV
+            connstr=$(az keyvault secret show --name "DefaultConnectionString" --vault-name "poketto-app-secrets" --query "value")
+            echo "connection-string=$connstr" >> $GITHUB_ENV
 
       - name: Update database
         run: |
