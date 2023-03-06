@@ -54,6 +54,7 @@ jobs:
         with:
           inlineScript: |
             connstr=$(az keyvault secret show --name "DefaultConnectionString" --vault-name "poketto-app-secrets" --query "value")
+            echo "::add-mask::$connstr"
             echo "connection-string=$connstr" >> $GITHUB_ENV
 
       - name: Update database
